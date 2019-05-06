@@ -1,6 +1,7 @@
 public class Adstruo.Temps : Wingpanel.Indicator {
     private Gtk.Box display_widget;
     private Gtk.Box popover_widget;
+    private Gtk.Label temperature;
 
     public Temps () {
         Object (
@@ -12,8 +13,11 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 
     construct {
 
+        this.visible = true;
+
+        //indicator's structure
         var icon = new Gtk.Image.from_icon_name ("sensors-temperature-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        var temperature = new Gtk.Label ("0℃");
+        temperature = new Gtk.Label ("0℃");
         temperature.margin = 2;
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
@@ -31,16 +35,17 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         popover_widget.add (new Wingpanel.Widgets.Separator ());
         popover_widget.add (options_button);
 
-        this.visible = true;
 
-        options_button.clicked.connect (() => {
-            this.visible = false;
 
-            Timeout.add (2000, () => {
-                this.visible = true;
-                return false;
-            });
-        });
+        options_button.clicked.connect (update_temp);
+        // (() => {
+        //     this.visible = false;
+
+        //     Timeout.add (2000, () => {
+        //         this.visible = true;
+        //         return false;
+        //     });
+        // });
 
     }
 
@@ -58,10 +63,16 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     public override void closed () {
     }
 
+    private void update_temp () {
+        var temp_unit = "℃";
+        var temp_value = 25;
+        this.temperature.label = temp_value.to_string () + temp_unit;
+    }
+
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-    debug ("Activating Sample Indicator");
+    debug ("Activating Temperature Indicator");
 
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
