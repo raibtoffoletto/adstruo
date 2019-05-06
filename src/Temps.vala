@@ -2,6 +2,8 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     private Gtk.Box display_widget;
     private Gtk.Box popover_widget;
     private Gtk.Label temperature;
+    private string temperature_source;
+    private bool unit_celsius;
 
     public Temps () {
         Object (
@@ -12,8 +14,10 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     }
 
     construct {
-
+        // get value from prefferences
         this.visible = true;
+        this.temperature_source = "hwmon0";
+        this.unit_celsius = true;
 
         //indicator's structure
         var icon = new Gtk.Image.from_icon_name ("sensors-temperature-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
@@ -35,17 +39,8 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         popover_widget.add (new Wingpanel.Widgets.Separator ());
         popover_widget.add (options_button);
 
-
-
-        options_button.clicked.connect (update_temp);
-        // (() => {
-        //     this.visible = false;
-
-        //     Timeout.add (2000, () => {
-        //         this.visible = true;
-        //         return false;
-        //     });
-        // });
+        //update indicator info
+        Timeout.add_full (Priority.DEFAULT, 1000, update_temp);
 
     }
 
@@ -63,14 +58,40 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     public override void closed () {
     }
 
-    private void update_temp () {
-        var temp_unit = "℃";
-        var temp_value = 25;
-        this.temperature.label = temp_value.to_string () + temp_unit;
+    private bool update_temp () { //get temperatures directly from /sys
+    	try {
+            string temp_raw, temp_unit;
+            FileUtils.get_contents("/sys/class/hwmon/" + this.temperature_source + "/temp1_input", out temp_raw);
+
+            var temp_value = convert_temp(temp_raw, this.unit_celsius);
+
+            if (!this.unit_celsius) {
+                temp_unit = "℉";
+            } else {
+                temp_unit = "℃";
+            }
+
+            this.temperature.label = temp_value + temp_unit;
+
+        } catch (FileError err) {
+    		stderr.printf (err.message);
+	    }
+
+	    return true;
     }
 
+    public string convert_temp (string temp_in, bool celsius = true) { // converts raw temperature info
+        int temp_out = int.parse(temp_in) / 1000;
+
+        if (!celsius) {
+            temp_out = ((temp_out * 9) / 5) + 32;
+        }
+
+        return temp_out.to_string ();
+    }
 }
 
+// wingpanel 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug ("Activating Temperature Indicator");
 
