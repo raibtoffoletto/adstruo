@@ -1,6 +1,9 @@
 # Adstruo
-Elementary's Wingpanel additional indicators
+Additional indicators for Elementary's Wingpanel
 
----
 ## Install
-Dependencies and etc... WORK IN PROGRESS!
+Dependencies:
+ - libgtk-3-0
+ - libwingpanel-2.0-dev
+ - libswitchboard-2.0-dev
+ - libgranite-dev
