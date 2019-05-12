@@ -10,8 +10,11 @@ shared_module('adstruo-temps',
 )
 #usr/lib/x86_64-linux-gnu/wingpanel/ 
 
-shared_module('adstruo-switchboard',
-    'src/Switchboard.vala',
+shared_module('adstruo-plug',
+    'src/Plug.vala',
+    'src/Switchboard/SettingsPage.vala',
+    'src/Switchboard/SimpleSettingsPage.vala',
+    'src/Switchboard/SettingsTemps.vala',
     dependencies:[
         dependency('gtk+-3.0'),
         dependency('switchboard-2.0'),
@@ -19,4 +22,7 @@ shared_module('adstruo-switchboard',
     ],
     install: false,
 )
-#/usr/lib/x86_64-linux-gnu/switchboard/personal
+#/usr/lib/x86_64-linux-gnu/switchboard/personalssss
+subdir ('data')
+
+meson.add_install_script('meson/post_install.py')

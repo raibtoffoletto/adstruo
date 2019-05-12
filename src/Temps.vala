@@ -2,8 +2,8 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     private Gtk.Box display_widget;
     private Gtk.Box popover_widget;
     private Gtk.Label temperature;
-    private string temperature_source;
-    private bool unit_celsius;
+    private GLib.Settings settings;
+    private Wingpanel.Widgets.Switch fahrenheit_switch;
 
     public Temps () {
         Object (
@@ -14,10 +14,11 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     }
 
     construct {
-        // get value from prefferences
+        // visible by default
         this.visible = true;
-        this.temperature_source = "hwmon0";
-        this.unit_celsius = true;
+
+        //get gsettings
+        this.settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
 
         //indicator's structure
         var icon = new Gtk.Image.from_icon_name ("sensors-temperature-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
@@ -30,9 +31,15 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         display_widget.pack_start (temperature);
 
         var options_button = new Gtk.ModelButton ();
-            options_button.text = "Options";
+        options_button.text = "Options";
+        options_button.clicked.connect (() => {
+            show_settings ();
+        });
 
-        var fahrenheit_switch = new Wingpanel.Widgets.Switch ("Fahrenheit");
+        fahrenheit_switch = new Wingpanel.Widgets.Switch ("Fahrenheit");
+        fahrenheit_switch.notify["active"].connect (() => {
+            this.settings.set_boolean ("unit-fahrenheit", (fahrenheit_switch.active ? true : false));
+        });
 
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         popover_widget.add (fahrenheit_switch);
@@ -58,14 +65,20 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     public override void closed () {
     }
 
-    private bool update_temp () { //get temperatures directly from /sys
+    //get temperatures directly from /sys and update indicator
+    private bool update_temp () {
+        this.visible = this.settings.get_boolean ("status");
+        var temperature_source = this.settings.get_string ("temperature-source");
+        var unit_fahrenheit = this.settings.get_boolean ("unit-fahrenheit");
+        fahrenheit_switch.active = unit_fahrenheit;
+
     	try {
             string temp_raw, temp_unit;
-            FileUtils.get_contents("/sys/class/hwmon/" + this.temperature_source + "/temp1_input", out temp_raw);
+            FileUtils.get_contents("/sys/class/hwmon/" + temperature_source + "/temp1_input", out temp_raw);
 
-            var temp_value = convert_temp(temp_raw, this.unit_celsius);
+            var temp_value = convert_temp(temp_raw, unit_fahrenheit);
 
-            if (!this.unit_celsius) {
+            if (unit_fahrenheit) {
                 temp_unit = "℉";
             } else {
                 temp_unit = "℃";
@@ -80,14 +93,26 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 	    return true;
     }
 
-    public string convert_temp (string temp_in, bool celsius = true) { // converts raw temperature info
+    // converts raw temperature info
+    private string convert_temp (string temp_in, bool fahrenheit = false) {
         int temp_out = int.parse(temp_in) / 1000;
 
-        if (!celsius) {
+        if (fahrenheit) {
             temp_out = ((temp_out * 9) / 5) + 32;
         }
 
         return temp_out.to_string ();
+    }
+
+    // opens system settings
+    private void show_settings () {
+        close ();
+
+        try {
+            AppInfo.launch_default_for_uri ("settings://adstruo", null);
+        } catch (Error e) {
+            warning ("%s\n", e.message);
+        }
     }
 }
 

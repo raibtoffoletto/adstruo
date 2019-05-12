@@ -1,26 +1,37 @@
 public class Adstruo.Plug : Switchboard.Plug {
-    private Gtk.Grid main_grid;
-    private Gtk.Label hello_label;
+    private Gtk.Paned main_panel;
 
     public Plug () {
         Object (category: Category.PERSONAL,
-                code_name: "adstruo-options",
+                code_name: "adstruo",
                 display_name: "Aditional Indicators",
-                description: "Manage aditional indicators for wingpanel",
+                description: "Manage aditional indicators for wingpanel.",
                 icon: "application-x-addon",
                 supported_settings: new Gee.TreeMap<string, string?> (null, null));
-        supported_settings.set ("indicators", null);
+        supported_settings.set ("adstruo", null);
     }
 
     public override Gtk.Widget get_widget () {
-        if (main_grid == null) {
-            main_grid = new Gtk.Grid ();
-            hello_label = new Gtk.Label ("Hello World!");
-            main_grid.attach (hello_label, 0, 0, 1, 1);
-        }
+        main_panel = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
 
-        main_grid.show_all ();
-        return main_grid;
+        //list of indicators available 
+        var settings_page = new SettingsPage ();
+        var settings_page_two = new SimpleSettingsPage ();
+        var settings_temps = new Adstruo.SettingsTemps ();
+
+        //list stacked in order
+        var stack = new Gtk.Stack ();
+        stack.add_named (settings_temps, "settings_temps");
+        stack.add_named (settings_page, "settings_page");
+        stack.add_named (settings_page_two, "settings_page_two");
+        var sidebar = new Granite.SettingsSidebar (stack);
+
+        //add panels to paned widget
+        main_panel.add (sidebar);
+        main_panel.add (stack);
+        main_panel.show_all ();
+
+        return main_panel;
     }
 
     public override void shown () {
@@ -32,7 +43,7 @@ public class Adstruo.Plug : Switchboard.Plug {
     }
 
     public override void search_callback (string location) {
-        hello_label.label = "Callback : %s".printf (location);
+        // hello_label.label = "Callback : %s".printf (location);
     }
 
     public override async Gee.TreeMap<string, string> search (string search) {
