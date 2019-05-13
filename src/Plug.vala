@@ -15,15 +15,11 @@ public class Adstruo.Plug : Switchboard.Plug {
         main_panel = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
 
         //list of indicators available 
-        var settings_page = new SettingsPage ();
-        var settings_page_two = new SimpleSettingsPage ();
         var settings_temps = new Adstruo.SettingsTemps ();
 
         //list stacked in order
         var stack = new Gtk.Stack ();
-        stack.add_named (settings_temps, "settings_temps");
-        stack.add_named (settings_page, "settings_page");
-        stack.add_named (settings_page_two, "settings_page_two");
+            stack.add_named (settings_temps, "settings_temps");
         var sidebar = new Granite.SettingsSidebar (stack);
 
         //add panels to paned widget

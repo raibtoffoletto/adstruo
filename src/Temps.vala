@@ -31,10 +31,10 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         display_widget.pack_start (temperature);
 
         var options_button = new Gtk.ModelButton ();
-        options_button.text = "Options";
-        options_button.clicked.connect (() => {
-            show_settings ();
-        });
+            options_button.text = "Options";
+            options_button.clicked.connect (() => {
+                show_settings ();
+            });
 
         fahrenheit_switch = new Wingpanel.Widgets.Switch ("Fahrenheit");
         fahrenheit_switch.notify["active"].connect (() => {
