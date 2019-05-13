@@ -1,7 +1,10 @@
 public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
     private GLib.Settings settings;
+<<<<<<< HEAD
     private Gtk.ListStore temp_devices;
     private Gtk.ComboBox temp_devices_combo;
+=======
+>>>>>>> 1046c421a351e3d9148b658ed431579fc00f8150
 
     public SettingsTemps () {
         Object (
@@ -17,6 +20,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         //get gsettings
         this.settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
         status_switch.active = this.settings.get_boolean ("status");
+<<<<<<< HEAD
         update_status ();
 
         //config content area
@@ -69,6 +73,11 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         content_area.attach (temp_devices_combo, 1, 1, 1, 1);
         content_area.attach (advice_label, 1, 2, 1, 1);
 
+=======
+
+        update_status ();
+        status_switch.notify["active"].connect (update_status);
+>>>>>>> 1046c421a351e3d9148b658ed431579fc00f8150
     }
 
     private void update_status () {
@@ -76,6 +85,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         status = (status_switch.active ? "Enabled" : "Disabled");
     }
 
+<<<<<<< HEAD
     private void update_devices () {
         try {
             var dir = GLib.Dir.open ("/sys/class/hwmon/", 0);
@@ -96,4 +106,6 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         }
     }
 
+=======
+>>>>>>> 1046c421a351e3d9148b658ed431579fc00f8150
 }
