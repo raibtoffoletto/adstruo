@@ -12,8 +12,6 @@ shared_module('adstruo-temps',
 
 shared_module('adstruo-plug',
     'src/Plug.vala',
-    'src/Switchboard/SettingsPage.vala',
-    'src/Switchboard/SimpleSettingsPage.vala',
     'src/Switchboard/SettingsTemps.vala',
     dependencies:[
         dependency('gtk+-3.0'),
