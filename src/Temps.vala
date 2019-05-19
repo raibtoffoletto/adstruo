@@ -4,6 +4,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     private Gtk.Label temperature;
     private GLib.Settings settings;
     private Wingpanel.Widgets.Switch fahrenheit_switch;
+    private Adstruo.Utilities adstruo;
 
     public Temps () {
         Object (
@@ -14,10 +15,8 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     }
 
     construct {
-        // visible by default
         this.visible = true;
-
-        //get gsettings
+        this.adstruo = new Adstruo.Utilities ();
         this.settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
 
         //indicator's structure
@@ -33,7 +32,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         var options_button = new Gtk.ModelButton ();
             options_button.text = "Options";
             options_button.clicked.connect (() => {
-                show_settings ();
+                this.adstruo.show_settings (this);
             });
 
         fahrenheit_switch = new Wingpanel.Widgets.Switch ("Fahrenheit");
@@ -76,7 +75,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
             string temp_raw, temp_unit;
             FileUtils.get_contents("/sys/class/hwmon/" + temperature_source + "/temp1_input", out temp_raw);
 
-            var temp_value = convert_temp(temp_raw, unit_fahrenheit);
+            var temp_value = this.adstruo.convert_temp (temp_raw, unit_fahrenheit);
 
             if (unit_fahrenheit) {
                 temp_unit = "℉";
@@ -93,27 +92,6 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 	    return true;
     }
 
-    // converts raw temperature info
-    private string convert_temp (string temp_in, bool fahrenheit = false) {
-        int temp_out = int.parse(temp_in) / 1000;
-
-        if (fahrenheit) {
-            temp_out = ((temp_out * 9) / 5) + 32;
-        }
-
-        return temp_out.to_string ();
-    }
-
-    // opens system settings
-    private void show_settings () {
-        close ();
-
-        try {
-            AppInfo.launch_default_for_uri ("settings://adstruo", null);
-        } catch (Error e) {
-            warning ("%s\n", e.message);
-        }
-    }
 }
 
 // wingpanel 
