@@ -4,8 +4,20 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     private Gtk.Image icon;
     private Gtk.Label temperature;
     private GLib.Settings settings;
-    private Wingpanel.Widgets.Switch fahrenheit_switch;
+    private Wingpanel.Widgets.Switch imperial_switch;
     private Adstruo.Utilities adstruo;
+    private Soup.Session http_session;
+    private string weather_description;
+    private string weather_icon;
+    private double main_temp;
+    private double main_temp_min;
+    private double main_temp_max;
+    private int64 main_humidity;
+    private int64 main_pressure;
+    private double wind_speed;
+    private int64 wind_deg;
+    private int64 sys_sunrise;
+    private int64 sys_sunset;
 
     public Weather () {
         Object (
@@ -17,8 +29,9 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
     construct {
         this.visible = true;
-        this.adstruo = new Adstruo.Utilities ();
-        this.settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
+        this.http_session = new Soup.Session ();
+        adstruo = new Adstruo.Utilities ();
+        settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
 
         //indicator's structure
         icon = this.adstruo.get_weather_icon ();
@@ -33,16 +46,18 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         var options_button = new Gtk.ModelButton ();
             options_button.text = "Options";
             options_button.clicked.connect (() => {
-                this.adstruo.show_settings (this);
+                // this.adstruo.show_settings (this);
+                get_weather_info ();
             });
 
-        fahrenheit_switch = new Wingpanel.Widgets.Switch ("Fahrenheit");
-        fahrenheit_switch.notify["active"].connect (() => {
+        imperial_switch = new Wingpanel.Widgets.Switch ("Imperial Units");
+        imperial_switch.notify["active"].connect (() => {
+            this.settings.set_boolean ("imperial-units", (imperial_switch.active ? true : false));
         });
 
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        popover_widget.add (fahrenheit_switch);
         popover_widget.add (new Wingpanel.Widgets.Separator ());
+        popover_widget.add (imperial_switch);
         popover_widget.add (options_button);
 
     }
@@ -61,6 +76,18 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     public override void closed () {
     }
 
+    public void get_weather_info () {
+        string city, country;
+        adstruo.get_location_data (this.http_session, out city, out country);
+
+        var api_id = settings.get_string("openweatherapi");
+        var weather_uri = "http://api.openweathermap.org/data/2.5/weather?q=%s,%s&APPID=%s".printf(city,country,api_id);
+
+        adstruo.get_weather_data (this.http_session, weather_uri, out this.weather_description, out this.weather_icon, out this.main_temp,
+                                    out this.main_temp_min, out this.main_temp_max, out this.main_humidity, out this.main_pressure, out this.wind_speed,
+                                    out this.wind_deg, out this.sys_sunrise, out this.sys_sunset);
+    }
+
 }
 
 // wingpanel 
@@ -72,6 +99,5 @@ public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorMan
     }
 
     var indicator = new Adstruo.Weather ();
-
     return indicator;
 }

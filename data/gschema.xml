@@ -23,10 +23,10 @@
             <summary>OpenWeather API ID</summary>
             <description>API ID to be used with the OpenWeather service</description>
         </key>
-        <key name="unit-fahrenheit" type="b">
+        <key name="imperial-units" type="b">
             <default>false</default>
-            <summary>Unit Fahrenheit</summary>
-            <description>Uses Imperial (Fahrenheit) unit or Celsius by default</description>
+            <summary>Imperial Units</summary>
+            <description>Uses Imperial (Fahrenheit and Miles) units or Metric by default</description>
         </key>
         <key name="status" type="b">
             <default>true</default>
