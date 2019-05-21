@@ -72,21 +72,14 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         fahrenheit_switch.active = unit_fahrenheit;
 
     	try {
-            string temp_raw, temp_unit;
+            string temp_raw;
             FileUtils.get_contents("/sys/class/hwmon/" + temperature_source + "/temp1_input", out temp_raw);
 
-            var temp_value = this.adstruo.convert_temp (temp_raw, unit_fahrenheit);
-
-            if (unit_fahrenheit) {
-                temp_unit = "℉";
-            } else {
-                temp_unit = "℃";
-            }
-
-            this.temperature.label = temp_value + temp_unit;
+            this.temperature.label = this.adstruo.convert_temp (temp_raw, unit_fahrenheit);
 
         } catch (FileError err) {
     		stderr.printf (err.message);
+	        return false;
 	    }
 
 	    return true;

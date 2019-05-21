@@ -1,7 +1,8 @@
 public class Adstruo.Utilities {
     // common
     public string convert_temp (string temp_in, bool fahrenheit = false, bool kelvin = false) {
-        int temp_out = int.parse(temp_in) / 1000; /* original int from /sys */
+        var temp_unit = "℃";
+        int temp_out = int.parse(temp_in) / 1000;
 
         if (kelvin) {
             double celsius = double.parse(temp_in) - 273.15;
@@ -10,9 +11,10 @@ public class Adstruo.Utilities {
 
         if (fahrenheit) {
             temp_out = ((temp_out * 9) / 5) + 32;
+            temp_unit = "℉";
         }
 
-        return temp_out.to_string ();
+        return "%i %s".printf(temp_out, temp_unit);
     }
 
     public void show_settings (Wingpanel.Indicator popover) {
@@ -83,12 +85,14 @@ public class Adstruo.Utilities {
 
             city = ipapi_root.get_string_member ("city");
             country = ipapi_root.get_string_member ("countryCode");
+
         } catch (Error e) {
             city = e.message;
         }
     }
 
     public void get_weather_data (Soup.Session http_session, string weather_uri,
+                                    out string name,
                                     out string weather_description,
                                     out string weather_icon,
                                     out double main_temp,
@@ -104,6 +108,7 @@ public class Adstruo.Utilities {
         var openweather_get_json = new Soup.Message ("GET", weather_uri);
         http_session.send_message (openweather_get_json);
 
+        name = null;
         weather_description = null;
         weather_icon = null;
         main_temp = 0;
@@ -121,6 +126,8 @@ public class Adstruo.Utilities {
             var openweather_parser = new Json.Parser ();
                 openweather_parser.load_from_data ((string) openweather_get_json.response_body.flatten ().data, -1);
             var openweather_root = openweather_parser.get_root ().get_object ();
+
+            name = openweather_root.get_string_member ("name");
 
             var weather = openweather_root.get_member ("weather");
             var weather_array = weather.get_array ();
@@ -142,6 +149,7 @@ public class Adstruo.Utilities {
             var sys = openweather_root.get_object_member ("sys");
                 sys_sunrise = sys.get_int_member ("sunrise");
                 sys_sunset = sys.get_int_member ("sunset");
+
         } catch (Error e) {
             weather_description = e.message;
         }
