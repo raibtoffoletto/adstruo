@@ -25,6 +25,11 @@ private int lng;
         imperial_units = this.settings.get_boolean ("imperial-units");
 http_session = new Soup.Session ();
 lng = 0;
+
+        string city, country;
+        this.adstruo.get_location_data.begin (this.http_session, out city, out country);
+// var loop = GLib.MainLoop ();
+// loop.run ();
         //indicator's structure
         icon = this.adstruo.get_weather_icon ();
         temperature = new Gtk.Label ("n/a");
@@ -43,7 +48,7 @@ lng = 0;
             });
 
         imperial_switch = new Wingpanel.Widgets.Switch ("Imperial Units");
-        imperial_switch.active = imperial_units; 
+        imperial_switch.active = imperial_units;
         imperial_switch.notify["active"].connect (() => {
             var imperial_units_changed = imperial_switch.active ? true : false;
             this.settings.set_boolean ("imperial-units", imperial_units_changed);
@@ -75,25 +80,26 @@ popover_widget.add (dbug);
     }
 
     public void get_weather_info () {
-        string city, country, name, weather_description, weather_icon;
+        string name, weather_description, weather_icon;
         double main_temp, main_temp_min, main_temp_max, wind_speed;
         int64 main_humidity, main_pressure, wind_deg, sys_sunrise, sys_sunset;
 
-        this.adstruo.get_location_data (this.http_session, out city, out country);
-
-        var api_id = settings.get_string("openweatherapi");
+        var api_id = settings.get_string ("openweatherapi");
         // var weather_uri = "http://api.openweathermap.org/data/2.5/weather?q=%s,%s&APPID=%s".printf(city,country,api_id);
         var weather_uri = "http://api.openweathermap.org/data/2.5/weather?lat=50&lon=%i&APPID=%s".printf(this.lng, api_id);
+//         if (connection) {
+//             this.adstruo.get_weather_data (this.http_session, weather_uri, out name, out weather_description,
+//                                             out weather_icon, out main_temp, out main_temp_min, out main_temp_max,
+//                                             out main_humidity, out main_pressure, out wind_speed,
+//                                             out wind_deg, out sys_sunrise, out sys_sunset);
 
-        this.adstruo.get_weather_data (this.http_session, weather_uri, out name, out weather_description, out weather_icon, out main_temp,
-                                    out main_temp_min, out main_temp_max, out main_humidity, out main_pressure, out wind_speed,
-                                    out wind_deg, out sys_sunrise, out sys_sunset);
+//             this.icon = this.adstruo.get_weather_icon (weather_icon);
+//             this.temperature.label = this.adstruo.convert_temp(main_temp.to_string (), this.imperial_units, true);
 
-        this.icon = this.adstruo.get_weather_icon (weather_icon);
-        this.temperature.label = this.adstruo.convert_temp(main_temp.to_string (), this.imperial_units, true);
-
-dbug.label = "%s\nlong is %i".printf(name, this.lng);
-this.lng += 1;
+// // dbug.label = "%s\nlong is %i".printf(name, this.lng);
+// this.lng += 1;
+//         }
+        dbug.label = "%s\nlong is %i \n conn: %s".printf(city, this.lng, country);
     }
 
 }

@@ -45,11 +45,11 @@ public class Adstruo.Utilities {
                 condition = "weather-fog";
                 break;
             case "03d":
-            case "03n": 
+            case "03n":
                 condition = "weather-overcast";
                 break;
             case "09d":
-            case "09n": 
+            case "09n":
                 condition = "weather-showers";
                 break;
             case "13d":
@@ -67,28 +67,33 @@ public class Adstruo.Utilities {
         }
 
         var icon = new Gtk.Image.from_icon_name (condition, Gtk.IconSize.SMALL_TOOLBAR);
-        return icon; 
+        return icon;
     }
 
-    public void get_location_data (Soup.Session http_session, out string city, out string country) {
+    public async void get_location_data (Soup.Session http_session, out string city, out string country) {
         var ipapi_uri = "http://ip-api.com/json/";
         var ipapi_json = new Soup.Message ("GET", ipapi_uri);
         http_session.send_message (ipapi_json);
 
-        city = null;
+        city = "%u\n".printf (ipapi_json.status_code);
         country = null;
 
-        try {
-            var ipapi_parser = new Json.Parser ();
-                ipapi_parser.load_from_data ((string) ipapi_json.response_body.flatten ().data, -1);
-            var ipapi_root = ipapi_parser.get_root ().get_object ();
+if (ipapi_json.status_code == 200) {
+        country = "true";
+}
+        // try {
+        //     var ipapi_parser = new Json.Parser ();
+        //         ipapi_parser.load_from_data ((string) ipapi_json.response_body.flatten ().data, -1);
+        //     var ipapi_root = ipapi_parser.get_root ().get_object ();
 
-            city = ipapi_root.get_string_member ("city");
-            country = ipapi_root.get_string_member ("countryCode");
+        //     city = ipapi_root.get_string_member ("city");
+        //     country = ipapi_root.get_string_member ("countryCode");
 
-        } catch (Error e) {
-            city = e.message;
-        }
+        //     return true;
+        // } catch (Error e) {
+        //     city = e.message;
+        // }
+
     }
 
     public void get_weather_data (Soup.Session http_session, string weather_uri,
