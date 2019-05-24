@@ -1,10 +1,10 @@
 public class Adstruo.Temps : Wingpanel.Indicator {
     private Gtk.Box display_widget;
     private Gtk.Box popover_widget;
-    private Gtk.Label temperature;
-    private GLib.Settings settings;
-    private Wingpanel.Widgets.Switch fahrenheit_switch;
     private Adstruo.Utilities adstruo;
+    private GLib.Settings settings;
+    private Gtk.Label temperature;
+    private Wingpanel.Widgets.Switch fahrenheit_switch;
 
     public Temps () {
         Object (
@@ -15,14 +15,13 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     }
 
     construct {
-        this.visible = true;
         this.adstruo = new Adstruo.Utilities ();
         this.settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
+        this.visible = this.settings.get_boolean ("status");
 
         //indicator's structure
         var icon = new Gtk.Image.from_icon_name ("sensors-temperature-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        temperature = new Gtk.Label ("0℃");
-        temperature.margin = 2;
+        temperature = new Gtk.Label ("0 ℃");
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         display_widget.valign = Gtk.Align.CENTER;
@@ -30,7 +29,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         display_widget.pack_start (temperature);
 
         var options_button = new Gtk.ModelButton ();
-            options_button.text = "Options";
+            options_button.text = "Settings";
             options_button.clicked.connect (() => {
                 this.adstruo.show_settings (this);
             });
@@ -87,7 +86,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 
 }
 
-// wingpanel 
+// wingpanel
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug ("Activating Temperature Indicator");
 
