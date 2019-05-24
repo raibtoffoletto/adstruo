@@ -43,7 +43,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         });
 
         //indicator's structure
-        icon = this.adstruo.get_weather_icon ();
+        icon = new Gtk.Image.from_icon_name (adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
         temperature = new Gtk.Label ("n/a");
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
@@ -124,16 +124,10 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                                 (latitude, longitude, locale[0], openweather_apiid);
             get_weather_data.begin ();
         } else {
-            //need to clean up before updating images
-            this.display_widget.remove (this.icon);
-            this.display_widget.remove (this.temperature);
-            this.icon = this.adstruo.get_weather_icon ();
+            this.icon.set_from_icon_name (this.adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
             this.temperature.label = "n/a";
-            this.display_widget.add (this.icon);
-            this.display_widget.add (this.temperature);
-            this.display_widget.show_all ();
 
-            var no_connection = new Gtk.Label ("waiting for connection");
+            var no_connection = new Gtk.Label ("Waiting for Internet connection");
                 no_connection.margin = 8;
                 no_connection.hexpand = true;
                 no_connection.halign = Gtk.Align.CENTER;
@@ -171,7 +165,8 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                         weather_description.valign = Gtk.Align.CENTER;
                         weather_description.margin_end = 8;
                     var weather_icon = weather_elements.get_string_member ("icon");
-                    var weather_icon_image = this.adstruo.get_weather_icon (weather_icon, true, Gtk.IconSize.DIALOG);
+                    var weather_icon_image = new Gtk.Image.from_icon_name (this.adstruo.get_weather_icon (weather_icon, true),
+                                                                             Gtk.IconSize.DIALOG);
                         weather_icon_image.margin = 8;
                         weather_icon_image.margin_end = 20;
                         weather_icon_image.hexpand = true;
@@ -220,13 +215,8 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                         extra_info.pack_start(wind_icon);
                         extra_info.pack_start(wind_label);
 
-                    this.display_widget.remove (this.icon);
-                    this.display_widget.remove (this.temperature);
-                    this.icon = this.adstruo.get_weather_icon (weather_icon);
+                    this.icon.set_from_icon_name (this.adstruo.get_weather_icon (weather_icon), Gtk.IconSize.SMALL_TOOLBAR);
                     this.temperature.label = this.adstruo.convert_temp (main_temp.to_string (), this.imperial_units, true);
-                    this.display_widget.add (this.icon);
-                    this.display_widget.add (this.temperature);
-                    this.display_widget.show_all ();
 
                     this.popover_widget.remove (this.weather_info);
                     this.weather_info = new Gtk.Grid ();

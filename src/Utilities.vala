@@ -64,7 +64,7 @@ public class Adstruo.Utilities {
         return label;
     }
 
-    public Gtk.Image get_weather_icon (string icon_code = "", bool symbolic = false, Gtk.IconSize icon_size = Gtk.IconSize.SMALL_TOOLBAR) {
+    public string get_weather_icon (string icon_code = "", bool symbolic = false) {
         string condition;
 
         switch (icon_code) {
@@ -107,6 +107,6 @@ public class Adstruo.Utilities {
             condition += "-symbolic";
         }
 
-        return new Gtk.Image.from_icon_name (condition, icon_size);
+        return condition;
     }
 }
