@@ -15,9 +15,13 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     }
 
     construct {
-        this.adstruo = new Adstruo.Utilities ();
-        this.settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
-        this.visible = this.settings.get_boolean ("status");
+        adstruo = new Adstruo.Utilities ();
+        settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
+
+        adstruo.update_indicator_status (this, settings.get_boolean ("status"));
+        settings.change_event.connect (() => {
+            adstruo.update_indicator_status (this, settings.get_boolean ("status"));
+        });
 
         //indicator's structure
         var icon = new Gtk.Image.from_icon_name ("sensors-temperature-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
@@ -44,8 +48,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         popover_widget.add (new Wingpanel.Widgets.Separator ());
         popover_widget.add (options_button);
 
-        //update indicator info
-        Timeout.add_full (Priority.DEFAULT, 1000, update_temp);
+        Timeout.add_full (Priority.DEFAULT, 5000, update_temp);
 
     }
 
@@ -65,7 +68,6 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 
     //get temperatures directly from /sys and update indicator
     private bool update_temp () {
-        this.visible = this.settings.get_boolean ("status");
         var temperature_source = this.settings.get_string ("temperature-source");
         var unit_fahrenheit = this.settings.get_boolean ("unit-fahrenheit");
         fahrenheit_switch.active = unit_fahrenheit;

@@ -30,9 +30,9 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         get_location_data.begin ();
         locale = Intl.get_language_names ();
 
-        this.adstruo.update_indicator_status (this, settings.get_boolean ("status"));
+        adstruo.update_indicator_status (this, settings.get_boolean ("status"));
         settings.change_event.connect (() => {
-            this.adstruo.update_indicator_status (this, settings.get_boolean ("status"));
+            adstruo.update_indicator_status (this, settings.get_boolean ("status"));
         });
 
         var gweather_unit = new GLib.Settings ("org.gnome.GWeather");
@@ -59,15 +59,6 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                 get_location_data.begin ();
             });
 
-        // imperial_switch = new Wingpanel.Widgets.Switch ("Imperial Units");
-        // imperial_switch.active = imperial_units;
-        // imperial_switch.notify["active"].connect (() => {
-        //     var imperial_units_changed = imperial_switch.active ? true : false;
-        //     this.settings.set_boolean ("imperial-units", imperial_units_changed);
-        //     imperial_units = imperial_units_changed;
-        //     get_location_data.begin ();
-        // });
-
         var options_button = new Gtk.ModelButton ();
             options_button.text = "Settings";
             options_button.clicked.connect (() => {
@@ -77,7 +68,6 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         popover_widget.pack_start (weather_info);
         popover_widget.pack_end (options_button);
-        // popover_widget.pack_end (imperial_switch);
         popover_widget.pack_end (update_button);
         popover_widget.pack_end (new Wingpanel.Widgets.Separator ());
 
@@ -104,8 +94,8 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     }
 
     public async void get_location_data () {
-        // to do: implement GeoClue in the future
-        // var ipapi_message = new Soup.Message ("GET", "http://ip-api.com/json/");
+        // I have contacted Mozzila for a valid API
+        // or FUTURE to do: implement GeoClue, it won't compile at this moment
         var ipapi_message = new Soup.Message ("GET", "https://location.services.mozilla.com/v1/geolocate?key=test");
         this.http_session.queue_message (ipapi_message, (sess, mess) => {
             try {
@@ -134,6 +124,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                                 (latitude, longitude, locale[0], openweather_apiid);
             get_weather_data.begin ();
         } else {
+            //need to clean up before updating images
             this.display_widget.remove (this.icon);
             this.display_widget.remove (this.temperature);
             this.icon = this.adstruo.get_weather_icon ();
@@ -152,18 +143,9 @@ public class Adstruo.Weather : Wingpanel.Indicator {
             this.weather_info.attach (no_connection, 0, 0);
             this.popover_widget.pack_start (this.weather_info);
             this.weather_info.show_all ();
-
         }
+
     }
-    // Uses a less accurate service to get the current location
-    // public void update_location (bool connexion = false, string ip_city = "", string ip_country = "") {
-    //     if (connexion) {
-    //         var openweather_apiid = settings.get_string ("openweatherapi");
-    //         this.weather_uri = "http://api.openweathermap.org/data/2.5/weather?q=%s,%s&APPID=%s".printf(ip_city, ip_country, openweather_apiid);
-    //         get_weather_data.begin ();
-    //     } else {
-    //     }
-    // }
 
     public async void get_weather_data () {
         var openweather_message = new Soup.Message ("GET", this.weather_uri);

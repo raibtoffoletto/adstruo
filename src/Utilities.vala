@@ -3,6 +3,15 @@ public class Adstruo.Utilities {
         indicator.visible = status;
     }
 
+    public void show_settings (Wingpanel.Indicator popover) {
+        popover.close ();
+        try {
+            AppInfo.launch_default_for_uri ("settings://adstruo", null);
+        } catch (Error e) {
+            warning ("%s\n", e.message);
+        }
+    }
+
     public string convert_temp (string temp_in, bool fahrenheit = false, bool kelvin = false) {
         var temp_unit = "℃";
         int temp_out = int.parse (temp_in) / 1000;
@@ -53,15 +62,6 @@ public class Adstruo.Utilities {
 
         var label = "%s".printf (wind_label);
         return label;
-    }
-
-    public void show_settings (Wingpanel.Indicator popover) {
-        popover.close ();
-        try {
-            AppInfo.launch_default_for_uri ("settings://adstruo", null);
-        } catch (Error e) {
-            warning ("%s\n", e.message);
-        }
     }
 
     public Gtk.Image get_weather_icon (string icon_code = "", bool symbolic = false, Gtk.IconSize icon_size = Gtk.IconSize.SMALL_TOOLBAR) {
