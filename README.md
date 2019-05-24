@@ -2,13 +2,37 @@
 Additional set indicators for Elementary's Wingpanel
 
 ## Install, build and run
-Dependencies:
- - glib-2.0
- - gio-2.0
- - gobject-2.0
+### Dependencies:
+ - libglib2.0-dev
+ - gobject-introspection
  - libgtk-3-0
+ - libgranite-dev
+ - libsoup2.4-dev
+ - libjson-glib-dev
  - libwingpanel-2.0-dev
  - libswitchboard-2.0-dev
- - libgranite-dev
- - libsoup-2.4
- - json-glib-1.0
+ - meson
+ - valac
+
+### Install dependencies:
+`sudo apt-get install libglib2.0-dev gobject-introspection libgtk-3-0 libgranite-dev libsoup2.4-dev libjson-glib-dev libwingpanel-2.0-dev libswitchboard-2.0-dev meson elementary-sdk`
+
+### Clone and Compile
+```bash
+git clone BLA
+cd BLA
+meson build --prefix=/usr
+
+cd build
+sudo ninja install
+```
+### Restart Wingpanel
+`pkill wingpanel -9`
+
+
+## Generating pot file
+```bash
+#in ./build directory
+sudo ninja com.github.raibtoffoletto.adstruo-pot
+sudo ninja com.github.raibtoffoletto.adstruo-update-po
+```

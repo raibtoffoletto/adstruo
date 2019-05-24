@@ -1,0 +1,78 @@
+# English translations for com.github.raibtoffoletto.adstruo package.
+# Copyright (C) 2019 THE com.github.raibtoffoletto.adstruo'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.raibtoffoletto.adstruo package.
+# Automatically generated, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.raibtoffoletto.adstruo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-24 15:09+0200\n"
+"PO-Revision-Date: 2019-05-24 15:09+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:8
+msgid "Adstruo"
+msgstr "Adstruo"
+
+#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:9
+msgid "_(\"Additional indicators for Elementary's Wingpanel\")"
+msgstr "_(\"Additional indicators for Elementary's Wingpanel\")"
+
+#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:11
+msgid ""
+"Adstruo aims to provide some additional indicators to ElementaryOS's "
+"Wingpanel, extending its functionality and providing extra information at an "
+"quick glance."
+msgstr ""
+"Adstruo aims to provide some additional indicators to ElementaryOS's "
+"Wingpanel, extending its functionality and providing extra information at an "
+"quick glance."
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:6
+msgid "Temperature Source"
+msgstr "Temperature Source"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:7
+msgid "Device that provides a temperature information"
+msgstr "Device that provides a temperature information"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:11
+msgid "Unit Fahrenheit"
+msgstr "Unit Fahrenheit"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:12
+msgid "Uses Imperial (Fahrenheit) unit or Celsius by default"
+msgstr "Uses Imperial (Fahrenheit) unit or Celsius by default"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:16
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:33
+msgid "Indicator Status"
+msgstr "Indicator Status"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:17
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:34
+msgid "Status of the indicator, Active or Disabled"
+msgstr "Status of the indicator, Active or Disabled"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:23
+msgid "OpenWeather API ID"
+msgstr "OpenWeather API ID"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:24
+msgid "API ID to be used with the OpenWeather service"
+msgstr "API ID to be used with the OpenWeather service"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:28
+msgid "Imperial Units"
+msgstr "Imperial Units"
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:29
+msgid "Uses Imperial (Fahrenheit and Miles) units or Metric by default"
+msgstr "Uses Imperial (Fahrenheit and Miles) units or Metric by default"

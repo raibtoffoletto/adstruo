@@ -1,9 +1,9 @@
 project('com.github.raibtoffoletto.adstruo', 'vala','c')
 
-# i18n = import('i18n')
-# gnome = import('gnome')
-# gettext_name = meson.project_name()
-# add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
+i18n = import('i18n')
+gnome = import('gnome')
+gettext_name = meson.project_name()
+add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
 
 wingpanel_dep = dependency('wingpanel-2.0')
 switchboard_dep = dependency('switchboard-2.0')
@@ -45,6 +45,6 @@ shared_module('adstruo-plug',
 )
 
 subdir ('data')
-#subdir ('po')
+subdir ('po')
 
 meson.add_install_script('meson/post_install.py')

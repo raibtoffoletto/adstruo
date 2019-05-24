@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Raí B. Toffoletto <rai@raibtoffoletto.com> -->
+<component type="addon">
+  <id>com.github.raibtoffoletto.adstruo</id>
+  <extends>com.github.elementary.wingpanel</extends>
+  <metadata_license>CC0</metadata_license>
+  <metadata_license>GPL-3.0</metadata_license>
+  <name>Adstruo</name>
+  <summary>_("Additional indicators for Elementary's Wingpanel")</summary>
+  <description>
+    <p>Adstruo aims to provide some additional indicators to ElementaryOS's Wingpanel, extending its functionality and providing extra information at an quick glance.</p>
+  </description>
+</component>

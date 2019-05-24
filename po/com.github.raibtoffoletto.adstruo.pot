@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.raibtoffoletto.adstruo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.raibtoffoletto.adstruo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-24 15:09+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:8
+msgid "Adstruo"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:9
+msgid "_(\"Additional indicators for Elementary's Wingpanel\")"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:11
+msgid ""
+"Adstruo aims to provide some additional indicators to ElementaryOS's "
+"Wingpanel, extending its functionality and providing extra information at an "
+"quick glance."
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:6
+msgid "Temperature Source"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:7
+msgid "Device that provides a temperature information"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:11
+msgid "Unit Fahrenheit"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:12
+msgid "Uses Imperial (Fahrenheit) unit or Celsius by default"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:16
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:33
+msgid "Indicator Status"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:17
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:34
+msgid "Status of the indicator, Active or Disabled"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:23
+msgid "OpenWeather API ID"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:24
+msgid "API ID to be used with the OpenWeather service"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:28
+msgid "Imperial Units"
+msgstr ""
+
+#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:29
+msgid "Uses Imperial (Fahrenheit and Miles) units or Metric by default"
+msgstr ""
