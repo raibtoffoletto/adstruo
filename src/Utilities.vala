@@ -33,7 +33,7 @@ public class Adstruo.Utilities {
     public string convert_humidity (string humid_in) {
         int humid_out = int.parse (humid_in);
 
-        var label = "Humidity: %i".printf (humid_out);
+        var label = _("Humidity: %i").printf (humid_out);
             label += "%";
         return label;
     }

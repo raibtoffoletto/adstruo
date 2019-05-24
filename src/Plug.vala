@@ -4,8 +4,8 @@ public class Adstruo.Plug : Switchboard.Plug {
     public Plug () {
         Object (category: Category.PERSONAL,
                 code_name: "adstruo",
-                display_name: "Aditional Indicators",
-                description: "Manage aditional indicators for wingpanel.",
+                display_name: _("Aditional Indicators"),
+                description: _("Manage aditional indicators for wingpanel."),
                 icon: "application-x-addon",
                 supported_settings: new Gee.TreeMap<string, string?> (null, null));
         supported_settings.set ("adstruo", null);
@@ -14,7 +14,7 @@ public class Adstruo.Plug : Switchboard.Plug {
     public override Gtk.Widget get_widget () {
         main_panel = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
 
-        //list of indicators available 
+        //list of indicators available
         var settings_temps = new Adstruo.SettingsTemps ();
 
         //list stacked in order
@@ -48,7 +48,7 @@ public class Adstruo.Plug : Switchboard.Plug {
 }
 
 public Switchboard.Plug get_plug (Module module) {
-    debug ("Activating Adstruo Options plugin");
+    debug (_("Activating Adstruo Options plugin"));
     var plug = new Adstruo.Plug ();
     return plug;
 }

@@ -17,8 +17,8 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     public Weather () {
         Object (
             code_name : "adstruo-weather",
-            display_name : "Weather Conditions Indicator",
-            description: "Adds the current weather information to the wingpanel."
+            display_name : _("Weather Conditions Indicator"),
+            description: _("Adds the current weather information to the wingpanel.")
         );
     }
 
@@ -54,13 +54,13 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         weather_info = new Gtk.Grid ();
 
         var update_button = new Gtk.ModelButton ();
-            update_button.text = "Update now";
+            update_button.text = _("Update now");
             update_button.clicked.connect (() => {
                 get_location_data.begin ();
             });
 
         var options_button = new Gtk.ModelButton ();
-            options_button.text = "Settings";
+            options_button.text = _("Settings");
             options_button.clicked.connect (() => {
                 this.adstruo.show_settings (this);
             });
@@ -94,8 +94,8 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     }
 
     public async void get_location_data () {
-        // I have contacted Mozzila for a valid API
-        // or FUTURE to do: implement GeoClue, it won't compile at this moment
+        // I already have contacted Mozzila for a valid API
+        // but FUTURE to do: implement GeoClue, it won't compile at this moment
         var ipapi_message = new Soup.Message ("GET", "https://location.services.mozilla.com/v1/geolocate?key=test");
         this.http_session.queue_message (ipapi_message, (sess, mess) => {
             try {
@@ -111,7 +111,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
                 this.loop.quit ();
             } catch (Error e) {
-                stderr.printf ("Could not get your location.\n");
+                stderr.printf (_("Could not get your location.\n"));
             }
 
         });
@@ -127,7 +127,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
             this.icon.set_from_icon_name (this.adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
             this.temperature.label = "n/a";
 
-            var no_connection = new Gtk.Label ("Waiting for Internet connection");
+            var no_connection = new Gtk.Label (_("Waiting for Internet connection"));
                 no_connection.margin = 8;
                 no_connection.hexpand = true;
                 no_connection.halign = Gtk.Align.CENTER;
@@ -235,7 +235,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
                 }
             } catch (Error e) {
-                stderr.printf ("Could not get the weather information.\n");
+                stderr.printf (_("Could not get the weather information.\n"));
             }
         });
     }
@@ -250,7 +250,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-    debug ("Activating Weather Indicator");
+    debug (_("Activating Weather Indicator"));
 
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;

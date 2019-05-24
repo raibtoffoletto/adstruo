@@ -6,15 +6,14 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
     public SettingsTemps () {
         Object (
             activatable: true,
-            description: "Shows a temperature indicator in the wingpanel",
-            header: "Indicators",
+            description: _("Shows a temperature indicator in the wingpanel"),
+            header: _("Indicators"),
             icon_name: "sensors-temperature-symbolic",
-            title: "Temperatures"
+            title: _("Temperature")
         );
     }
 
     construct {
-        //get gsettings
         this.settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
         status_switch.active = this.settings.get_boolean ("status");
         update_status ();
@@ -26,7 +25,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         content_area.halign = Gtk.Align.CENTER;
 
         //list options available
-        var unit_label = new Gtk.Label ("Use Fahrenheit : ");
+        var unit_label = new Gtk.Label (_("Use Fahrenheit : "));
             unit_label.xalign = 1;
 
         var unit_switch = new Gtk.Switch ();
@@ -37,7 +36,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
                 this.settings.set_boolean ("unit-fahrenheit", (unit_switch.active ? true : false));
             });
 
-        var temp_label = new Gtk.Label ("Source device to be monitored : ");
+        var temp_label = new Gtk.Label (_("Source device to be monitored : "));
             temp_label.xalign = 1;
 
             temp_devices = new Gtk.ListStore (2, typeof (string), typeof (string));
@@ -53,7 +52,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
             temp_devices_combo.pack_start (renderer, true);
             temp_devices_combo.add_attribute (renderer, "text", 1);
 
-        var advice_label = new Gtk.Label ("<small>* Usually CPU temps are provided by the kernel (<i>i.e. k10</i>)</small>");
+        var advice_label = new Gtk.Label (_("<small>* Usually CPU temps are provided by the kernel (<i>i.e. k10</i>)</small>"));
             advice_label.use_markup = true;
 
         //connect methods
@@ -73,7 +72,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
 
     private void update_status () {
         this.settings.set_boolean ("status", status_switch.active);
-        status = (status_switch.active ? "Enabled" : "Disabled");
+        status = (status_switch.active ? _("Enabled") : _("Disabled"));
     }
 
     private void update_devices () {

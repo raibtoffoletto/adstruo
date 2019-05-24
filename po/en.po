@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.raibtoffoletto.adstruo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 15:09+0200\n"
+"POT-Creation-Date: 2019-05-24 15:22+0200\n"
 "PO-Revision-Date: 2019-05-24 15:09+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,6 +16,111 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/Plug.vala:7
+msgid "Aditional Indicators"
+msgstr ""
+
+#: src/Plug.vala:8
+#, fuzzy
+msgid "Manage aditional indicators for wingpanel."
+msgstr "_(\"Additional indicators for Elementary's Wingpanel\")"
+
+#: src/Plug.vala:51
+msgid "Activating Adstruo Options plugin"
+msgstr ""
+
+#: src/Switchboard/SettingsTemps.vala:9
+msgid "Shows a temperature indicator in the wingpanel"
+msgstr ""
+
+#: src/Switchboard/SettingsTemps.vala:10
+#, fuzzy
+msgid "Indicators"
+msgstr "Indicator Status"
+
+#: src/Switchboard/SettingsTemps.vala:12
+#, fuzzy
+msgid "Temperature"
+msgstr "Temperature Source"
+
+#: src/Switchboard/SettingsTemps.vala:28
+#, fuzzy
+msgid "Use Fahrenheit : "
+msgstr "Unit Fahrenheit"
+
+#: src/Switchboard/SettingsTemps.vala:39
+msgid "Source device to be monitored : "
+msgstr ""
+
+#: src/Switchboard/SettingsTemps.vala:55
+msgid ""
+"<small>* Usually CPU temps are provided by the kernel (<i>i.e. k10</i>)</"
+"small>"
+msgstr ""
+
+#: src/Switchboard/SettingsTemps.vala:75
+msgid "Enabled"
+msgstr ""
+
+#: src/Switchboard/SettingsTemps.vala:75
+msgid "Disabled"
+msgstr ""
+
+#: src/Temps.vala:12
+#, fuzzy
+msgid "Temperature Indicator"
+msgstr "Temperature Source"
+
+#: src/Temps.vala:13
+msgid "Adds temperature information (CPU or GPU) to the wingpanel."
+msgstr ""
+
+#: src/Temps.vala:36 src/Weather.vala:63
+msgid "Settings"
+msgstr ""
+
+#: src/Temps.vala:41
+#, fuzzy
+msgid "Use Fahrenheit"
+msgstr "Unit Fahrenheit"
+
+#: src/Temps.vala:93
+msgid "Activating Temperature Indicator"
+msgstr ""
+
+#: src/Weather.vala:20
+msgid "Weather Conditions Indicator"
+msgstr ""
+
+#: src/Weather.vala:21
+msgid "Adds the current weather information to the wingpanel."
+msgstr ""
+
+#: src/Weather.vala:57
+msgid "Update now"
+msgstr ""
+
+#: src/Weather.vala:114
+msgid "Could not get your location.\n"
+msgstr ""
+
+#: src/Weather.vala:130
+msgid "Waiting for Internet connection"
+msgstr ""
+
+#: src/Weather.vala:238
+msgid "Could not get the weather information.\n"
+msgstr ""
+
+#: src/Weather.vala:253
+msgid "Activating Weather Indicator"
+msgstr ""
+
+#: src/Utilities.vala:36
+#, c-format
+msgid "Humidity: %i"
+msgstr ""
 
 #: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:8
 msgid "Adstruo"

@@ -9,8 +9,8 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     public Temps () {
         Object (
             code_name : "adstruo-temps",
-            display_name : "Temperature Indicator",
-            description: "Adds temperature information (CPU or GPU) to the wingpanel."
+            display_name : _("Temperature Indicator"),
+            description: _("Adds temperature information (CPU or GPU) to the wingpanel.")
         );
     }
 
@@ -33,12 +33,12 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         display_widget.pack_start (temperature);
 
         var options_button = new Gtk.ModelButton ();
-            options_button.text = "Settings";
+            options_button.text = _("Settings");
             options_button.clicked.connect (() => {
                 this.adstruo.show_settings (this);
             });
 
-        fahrenheit_switch = new Wingpanel.Widgets.Switch ("Fahrenheit");
+        fahrenheit_switch = new Wingpanel.Widgets.Switch (_("Use Fahrenheit"));
         fahrenheit_switch.notify["active"].connect (() => {
             this.settings.set_boolean ("unit-fahrenheit", (fahrenheit_switch.active ? true : false));
         });
@@ -90,7 +90,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 
 // wingpanel
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-    debug ("Activating Temperature Indicator");
+    debug (_("Activating Temperature Indicator"));
 
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
