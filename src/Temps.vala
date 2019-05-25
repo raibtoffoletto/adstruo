@@ -10,7 +10,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         Object (
             code_name : "adstruo-temps",
             display_name : _("Temperature Indicator"),
-            description: _("Adds temperature information (CPU or GPU) to the wingpanel.")
+            description: _("Shows a hardware temperature indicator in the wingpanel")
         );
     }
 
@@ -21,6 +21,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         adstruo.update_indicator_status (this, settings.get_boolean ("status"));
         settings.change_event.connect (() => {
             adstruo.update_indicator_status (this, settings.get_boolean ("status"));
+            update_temp ();
         });
 
         var icon = new Gtk.Image.from_icon_name ("sensors-temperature-symbolic", Gtk.IconSize.SMALL_TOOLBAR);

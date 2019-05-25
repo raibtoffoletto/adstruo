@@ -4,12 +4,12 @@
         <key name="temperature-source" type="s">
             <default>'hwmon0'</default>
             <summary>Temperature Source</summary>
-            <description>Device that provides a temperature information</description>
+            <description>Device providing the temperature to be monitored</description>
         </key>
         <key name="unit-fahrenheit" type="b">
             <default>false</default>
             <summary>Unit Fahrenheit</summary>
-            <description>Uses Imperial (Fahrenheit) unit or Celsius by default</description>
+            <description>Uses Fahrenheit instead of Celsius</description>
         </key>
         <key name="status" type="b">
             <default>true</default>
@@ -22,11 +22,6 @@
             <default>'418fd9370cf2cc9a1bd42df67af1ab2e'</default>
             <summary>OpenWeather API ID</summary>
             <description>API ID to be used with the OpenWeather service</description>
-        </key>
-        <key name="imperial-units" type="b">
-            <default>false</default>
-            <summary>Imperial Units</summary>
-            <description>Uses Imperial (Fahrenheit and Miles) units or Metric by default</description>
         </key>
         <key name="status" type="b">
             <default>true</default>

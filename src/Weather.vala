@@ -18,7 +18,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         Object (
             code_name : "adstruo-weather",
             display_name : _("Weather Conditions Indicator"),
-            description: _("Adds the current weather information to the wingpanel.")
+            description: _("Shows a weather indicator in the wingpanel")
         );
     }
 
@@ -105,12 +105,12 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
                     update_location (true, ipapi_root.get_double_member ("lat"), ipapi_root.get_double_member ("lng"));
                 } else {
-                    update_location ();
+                    connection_failed (_("Could not connect to the server"));
                 }
 
                 this.loop.quit ();
             } catch (Error e) {
-                stderr.printf (_("Could not get your location.\n"));
+                stderr.printf (_("Could not connect to the server\n"));
             }
 
         });
@@ -118,26 +118,20 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
     public void update_location (bool connexion = false, double latitude = 0, double longitude = 0) {
         if (connexion) {
-            var openweather_apiid = settings.get_string ("openweatherapi");
+            string openweather_apiid;
+            var settings_apiid = settings.get_string ("openweatherapi");
+
+            if (settings_apiid != "418fd9370cf2cc9a1bd42df67af1ab2e") {
+                openweather_apiid = settings_apiid;
+            } else {
+                openweather_apiid = "418fd9370cf2cc9a1bd42df67af1ab2e";
+            }
+
             this.weather_uri = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&APPID=%s".printf
                                 (latitude, longitude, locale[0], openweather_apiid);
+
             get_weather_data.begin ();
-        } else {
-            this.icon.set_from_icon_name (this.adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
-            this.temperature.label = "n/a";
-
-            var no_connection = new Gtk.Label (_("Waiting for Internet connection"));
-                no_connection.margin = 8;
-                no_connection.hexpand = true;
-                no_connection.halign = Gtk.Align.CENTER;
-                no_connection.valign = Gtk.Align.CENTER;
-            this.popover_widget.remove (this.weather_info);
-            this.weather_info = new Gtk.Grid ();
-            this.weather_info.attach (no_connection, 0, 0);
-            this.popover_widget.pack_start (this.weather_info);
-            this.weather_info.show_all ();
         }
-
     }
 
     public async void get_weather_data () {
@@ -232,9 +226,12 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                     this.popover_widget.pack_start (this.weather_info);
                     this.weather_info.show_all ();
 
+                } else {
+                    connection_failed (_("Unable to retrieve weather information
+                                        \nCheck if the OpenWeather API is correct"));
                 }
             } catch (Error e) {
-                stderr.printf (_("Could not get the weather information.\n"));
+                stderr.printf (_("Unable to retrieve weather information\n"));
             }
         });
     }
@@ -246,6 +243,23 @@ public class Adstruo.Weather : Wingpanel.Indicator {
             this.imperial_units = false;
         }
     }
+
+    public void connection_failed (string message = "") {
+            this.icon.set_from_icon_name (this.adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
+            this.temperature.label = "n/a";
+
+            var no_connection = new Gtk.Label (message);
+                no_connection.margin = 8;
+                no_connection.hexpand = true;
+                no_connection.halign = Gtk.Align.CENTER;
+                no_connection.valign = Gtk.Align.CENTER;
+            this.popover_widget.remove (this.weather_info);
+            this.weather_info = new Gtk.Grid ();
+            this.weather_info.attach (no_connection, 0, 0);
+            this.popover_widget.pack_start (this.weather_info);
+            this.weather_info.show_all ();
+        }
+
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {

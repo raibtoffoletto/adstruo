@@ -26,6 +26,9 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         content_area.margin_top = 24;
         content_area.halign = Gtk.Align.CENTER;
 
+        var temps_description_label = new Gtk.Label (_("Oi"));
+            temps_description_label.use_markup = true;
+
         var unit_label = new Gtk.Label (_("Use Fahrenheit :"));
             unit_label.xalign = 1;
 
@@ -53,7 +56,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
             temp_devices_combo.pack_start (renderer, true);
             temp_devices_combo.add_attribute (renderer, "text", 1);
 
-        var advice_label = new Gtk.Label (_("<small>* Usually CPU temps are provided by the kernel (<i>i.e. k10</i>)</small>"));
+        var advice_label = new Gtk.Label (_("* CPU temps are ysually provided by the kernel (<i>i.e. k10*</i>)"));
             advice_label.use_markup = true;
 
         status_switch.notify["active"].connect (() => {
@@ -63,12 +66,12 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
             this.settings.set_string ("temperature-source", this.temp_devices_combo.get_active_id ());
         });
 
-        //add to the view
-        content_area.attach (unit_label, 0, 0, 1, 1);
-        content_area.attach (unit_switch, 1, 0, 1, 1);
-        content_area.attach (temp_label, 0, 1, 1, 1);
-        content_area.attach (temp_devices_combo, 1, 1, 1, 1);
-        content_area.attach (advice_label, 1, 2, 1, 1);
+        content_area.attach (temps_description_label, 0, 0, 2, 1);
+        content_area.attach (temp_label, 0, 1);
+        content_area.attach (temp_devices_combo, 1, 1);
+        content_area.attach (advice_label, 1, 2);
+        content_area.attach (unit_label, 0, 3);
+        content_area.attach (unit_switch, 1, 3);
 
     }
 
