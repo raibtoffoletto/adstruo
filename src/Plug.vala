@@ -16,13 +16,14 @@ public class Adstruo.Plug : Switchboard.Plug {
 
         //list of indicators available
         var settings_temps = new Adstruo.SettingsTemps ();
-
-        //list stacked in order
-        var stack = new Gtk.Stack ();
-            stack.add_named (settings_temps, "settings_temps");
-        var sidebar = new Granite.SettingsSidebar (stack);
+        var settings_weather = new Adstruo.SettingsWeather ();
 
         //add panels to paned widget
+        var stack = new Gtk.Stack ();
+            stack.add_named (settings_temps, "settings_temps");
+            stack.add_named (settings_weather, "settings_weather");
+        var sidebar = new Granite.SettingsSidebar (stack);
+
         main_panel.add (sidebar);
         main_panel.add (stack);
         main_panel.show_all ();
@@ -31,15 +32,12 @@ public class Adstruo.Plug : Switchboard.Plug {
     }
 
     public override void shown () {
-
     }
 
     public override void hidden () {
-
     }
 
     public override void search_callback (string location) {
-        // hello_label.label = "Callback : %s".printf (location);
     }
 
     public override async Gee.TreeMap<string, string> search (string search) {

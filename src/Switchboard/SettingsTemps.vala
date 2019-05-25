@@ -1,12 +1,13 @@
 public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
     private GLib.Settings settings;
+    private Adstruo.Utilities adstruo;
     private Gtk.ListStore temp_devices;
     private Gtk.ComboBox temp_devices_combo;
 
     public SettingsTemps () {
         Object (
             activatable: true,
-            description: _("Shows a temperature indicator in the wingpanel"),
+            description: _("Shows a hardware temperature indicator in the wingpanel"),
             header: _("Indicators"),
             icon_name: "sensors-temperature-symbolic",
             title: _("Temperature")
@@ -14,18 +15,18 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
     }
 
     construct {
-        this.settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
-        status_switch.active = this.settings.get_boolean ("status");
-        update_status ();
+        adstruo = new Adstruo.Utilities ();
+        settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
 
-        //config content area
+        status_switch.active = this.settings.get_boolean ("status");
+        adstruo.update_status (settings, this);
+
         content_area.column_spacing = 12;
         content_area.row_spacing = 24;
         content_area.margin_top = 24;
         content_area.halign = Gtk.Align.CENTER;
 
-        //list options available
-        var unit_label = new Gtk.Label (_("Use Fahrenheit : "));
+        var unit_label = new Gtk.Label (_("Use Fahrenheit :"));
             unit_label.xalign = 1;
 
         var unit_switch = new Gtk.Switch ();
@@ -36,7 +37,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
                 this.settings.set_boolean ("unit-fahrenheit", (unit_switch.active ? true : false));
             });
 
-        var temp_label = new Gtk.Label (_("Source device to be monitored : "));
+        var temp_label = new Gtk.Label (_("Device to be monitored :"));
             temp_label.xalign = 1;
 
             temp_devices = new Gtk.ListStore (2, typeof (string), typeof (string));
@@ -55,8 +56,9 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         var advice_label = new Gtk.Label (_("<small>* Usually CPU temps are provided by the kernel (<i>i.e. k10</i>)</small>"));
             advice_label.use_markup = true;
 
-        //connect methods
-        status_switch.notify["active"].connect (update_status);
+        status_switch.notify["active"].connect (() => {
+            this.adstruo.update_status (this.settings, this);
+        });
         temp_devices_combo.changed.connect (() => {
             this.settings.set_string ("temperature-source", this.temp_devices_combo.get_active_id ());
         });
@@ -68,11 +70,6 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         content_area.attach (temp_devices_combo, 1, 1, 1, 1);
         content_area.attach (advice_label, 1, 2, 1, 1);
 
-    }
-
-    private void update_status () {
-        this.settings.set_boolean ("status", status_switch.active);
-        status = (status_switch.active ? _("Enabled") : _("Disabled"));
     }
 
     private void update_devices () {

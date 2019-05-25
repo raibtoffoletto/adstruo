@@ -42,7 +42,6 @@ public class Adstruo.Weather : Wingpanel.Indicator {
             get_location_data.begin ();
         });
 
-        //indicator's structure
         icon = new Gtk.Image.from_icon_name (adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
         temperature = new Gtk.Label ("n/a");
 

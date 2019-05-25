@@ -23,7 +23,6 @@ public class Adstruo.Temps : Wingpanel.Indicator {
             adstruo.update_indicator_status (this, settings.get_boolean ("status"));
         });
 
-        //indicator's structure
         var icon = new Gtk.Image.from_icon_name ("sensors-temperature-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         temperature = new Gtk.Label ("0 ℃");
 
@@ -41,6 +40,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         fahrenheit_switch = new Wingpanel.Widgets.Switch (_("Use Fahrenheit"));
         fahrenheit_switch.notify["active"].connect (() => {
             this.settings.set_boolean ("unit-fahrenheit", (fahrenheit_switch.active ? true : false));
+            update_temp ();
         });
 
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -48,6 +48,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         popover_widget.add (new Wingpanel.Widgets.Separator ());
         popover_widget.add (options_button);
 
+        update_temp ();
         Timeout.add_full (Priority.DEFAULT, 5000, update_temp);
 
     }
@@ -88,7 +89,6 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 
 }
 
-// wingpanel
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug (_("Activating Temperature Indicator"));
 

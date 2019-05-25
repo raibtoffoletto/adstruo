@@ -3,6 +3,11 @@ public class Adstruo.Utilities {
         indicator.visible = status;
     }
 
+    public void update_status (GLib.Settings settings, Granite.SimpleSettingsPage plug) {
+        settings.set_boolean ("status", plug.status_switch.active);
+        plug.status = (plug.status_switch.active ? _("Enabled") : _("Disabled"));
+    }
+
     public void show_settings (Wingpanel.Indicator popover) {
         popover.close ();
         try {
@@ -58,7 +63,6 @@ public class Adstruo.Utilities {
             var wind_speed = (speed * 36) / 10;
             wind_label = "%i km/h". printf ((int)wind_speed);
         }
-
 
         var label = "%s".printf (wind_label);
         return label;

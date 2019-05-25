@@ -38,7 +38,9 @@ shared_module('adstruo-weather',
 
 shared_module('adstruo-plug',
     'src/Plug.vala',
+    'src/Utilities.vala',
     'src/Switchboard/SettingsTemps.vala',
+    'src/Switchboard/SettingsWeather.vala',
     dependencies: dependencies,
     install: true,
     install_dir : join_paths(switchboard_dep.get_pkgconfig_variable('plugsdir'), 'personal')
