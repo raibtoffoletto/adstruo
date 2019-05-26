@@ -25,14 +25,16 @@ public class Adstruo.Plug : Switchboard.Plug {
         var stack = new Gtk.Stack ();
             stack.add_named (settings_temps, "adstruo-temps");
             stack.add_named (settings_weather, "adstruo-weather");
-            stack.set_visible_child_name (main_settings.get_string ("settings-to-open"));
-            //BUG: Settings sidebar won't be selected... can't figure out a way to set visible_child_name that worked
 
         var sidebar = new Granite.SettingsSidebar (stack);
 
         main_panel.add (sidebar);
         main_panel.add (stack);
         main_panel.show_all ();
+
+        stack.set_visible_child_name (main_settings.get_string ("settings-to-open"));
+        //BUG: Settings sidebar won't be selected... can't figure out a way to set visible_child_name that worked
+
 
         return main_panel;
     }

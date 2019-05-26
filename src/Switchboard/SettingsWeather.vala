@@ -18,7 +18,12 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
         status_switch.active = this.settings.get_boolean ("status");
         adstruo.update_status (settings, this);
 
-        var weather_description = _("TO DO");
+        var weather_description = _("This indicator gets the weather information from the " +
+                                    "OpenWeatherMap organization.\nThe language and units used " +
+                                    "can be changed in the \"Language & Region\" settings.\n" +
+                                    "The free API used by default provides a limited amount of " +
+                                    "calls per minute, therefore, please consider registering for " +
+                                    "your own API ID.");
         var weather_description_label = new Gtk.Label (weather_description);
             weather_description_label.justify = Gtk.Justification.FILL;
             weather_description_label.halign = Gtk.Align.START;
@@ -26,7 +31,6 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
             weather_description_label.wrap = true;
             weather_description_label.margin_start = 60;
             weather_description_label.margin_end = 60;
-            weather_description_label.use_markup = true;
 
         var openweather_label = new Gtk.Label (_("OpenWeather API :"));
             openweather_label.xalign = 1;
@@ -49,6 +53,16 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
         content_area.hexpand = true;
         content_area.attach (weather_description_label, 0, 0);
         content_area.attach (options_grid, 0, 1);
+
+        var openweather_button = new Gtk.Button.with_label ("Go to openweathermap.org");
+        action_area.add (openweather_button);
+        openweather_button.clicked.connect (() => {
+            try {
+                AppInfo.launch_default_for_uri ("https://openweathermap.org/appid", null);
+            } catch (Error e) {
+                warning ("%s\n", e.message);
+            }
+        });
 
         openweather_entry.changed.connect (() => {
             var openweather_entry_lenght = openweather_entry.text.char_count ();

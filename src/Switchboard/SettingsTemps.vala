@@ -22,7 +22,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         adstruo.update_status (settings, this);
 
         var temps_description = _("Here you can choose a device to monitor its temperature. \n" +
-                                "Devices available may vary according to your system," +
+                                "Devices available may vary according to your system, " +
                                 "the information is obtained directly from sensors in <b>/sys</b>.");
         var temps_description_label = new Gtk.Label (temps_description);
             temps_description_label.justify = Gtk.Justification.FILL;
