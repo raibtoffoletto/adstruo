@@ -7,7 +7,8 @@ public class Adstruo.Plug : Switchboard.Plug {
                 display_name: _("Aditional Indicators"),
                 description: _("Manage aditional indicators for wingpanel."),
                 icon: "application-x-addon",
-                supported_settings: new Gee.TreeMap<string, string?> (null, null));
+                supported_settings: new Gee.TreeMap<string, string?> (null, null)
+                );
         supported_settings.set ("adstruo", null);
     }
 
@@ -19,9 +20,14 @@ public class Adstruo.Plug : Switchboard.Plug {
         var settings_weather = new Adstruo.SettingsWeather ();
 
         //add panels to paned widget
+        var main_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo");
+
         var stack = new Gtk.Stack ();
-            stack.add_named (settings_temps, "settings_temps");
-            stack.add_named (settings_weather, "settings_weather");
+            stack.add_named (settings_temps, "adstruo-temps");
+            stack.add_named (settings_weather, "adstruo-weather");
+            stack.set_visible_child_name (main_settings.get_string ("settings-to-open"));
+            //BUG: Settings sidebar won't be selected... can't figure out a way to set visible_child_name that worked
+
         var sidebar = new Granite.SettingsSidebar (stack);
 
         main_panel.add (sidebar);

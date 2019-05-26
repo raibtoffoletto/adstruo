@@ -10,6 +10,9 @@ public class Adstruo.Utilities {
 
     public void show_settings (Wingpanel.Indicator popover) {
         popover.close ();
+        var main_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo");
+            main_settings.set_string ("settings-to-open", popover.code_name);
+
         try {
             AppInfo.launch_default_for_uri ("settings://adstruo", null);
         } catch (Error e) {

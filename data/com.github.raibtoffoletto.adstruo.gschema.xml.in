@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schemalist>
+    <schema path="/com/github/raibtoffoletto/adstruo/" id="com.github.raibtoffoletto.adstruo">
+        <key name="settings-to-open" type="s">
+            <default>''</default>
+            <summary>Indicator Settings to be openned</summary>
+            <description>Last settings page to be openned when accessed via the indicator</description>
+        </key>
+    </schema>
     <schema path="/com/github/raibtoffoletto/adstruo/temps/" id="com.github.raibtoffoletto.adstruo.temps">
         <key name="temperature-source" type="s">
             <default>'hwmon0'</default>
