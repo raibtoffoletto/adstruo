@@ -12,7 +12,7 @@
             <description>Uses Fahrenheit instead of Celsius</description>
         </key>
         <key name="status" type="b">
-            <default>true</default>
+            <default>false</default>
             <summary>Indicator Status</summary>
             <description>Status of the indicator, Active or Disabled</description>
         </key>
@@ -24,7 +24,7 @@
             <description>API ID to be used with the OpenWeather service</description>
         </key>
         <key name="status" type="b">
-            <default>true</default>
+            <default>false</default>
             <summary>Indicator Status</summary>
             <description>Status of the indicator, Active or Disabled</description>
         </key>

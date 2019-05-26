@@ -8,6 +8,13 @@
   <name>Adstruo</name>
   <summary>_("Additional indicators for Elementary's Wingpanel")</summary>
   <description>
-    <p>Adstruo aims to provide some additional indicators to ElementaryOS's Wingpanel, extending its functionality and providing extra information at an quick glance.</p>
+    <p>Adstruo aims to provide some additional indicators to ElementaryOS's Wingpanel,
+       thus, extending its functionality and providing extra information at a quick glance.</p>
+    <p>For the moment there are two indicatos available:
+      <ul>
+        <li>Hardware Temperature</li>
+        <li>Weather Information</li>
+      </ul>
+    </p>
   </description>
 </component>

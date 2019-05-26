@@ -7,10 +7,10 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
     public SettingsTemps () {
         Object (
             activatable: true,
-            description: _("Shows a hardware temperature indicator in the wingpanel"),
+            description: _("Shows a hardware temperature in the wingpanel"),
             header: _("Indicators"),
             icon_name: "sensors-temperature-symbolic",
-            title: _("Temperature")
+            title: _("Hardware Temperature")
         );
     }
 
@@ -21,12 +21,16 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         status_switch.active = this.settings.get_boolean ("status");
         adstruo.update_status (settings, this);
 
-        content_area.column_spacing = 12;
-        content_area.row_spacing = 24;
-        content_area.margin_top = 24;
-        content_area.halign = Gtk.Align.CENTER;
-
-        var temps_description_label = new Gtk.Label (_("Oi"));
+        var temps_description = _("Here you can choose a device to monitor its temperature. \n" +
+                                "Devices available may vary according to your system," +
+                                "the information is obtained directly from sensors in <b>/sys</b>.");
+        var temps_description_label = new Gtk.Label (temps_description);
+            temps_description_label.justify = Gtk.Justification.FILL;
+            temps_description_label.halign = Gtk.Align.START;
+            temps_description_label.hexpand = true;
+            temps_description_label.wrap = true;
+            temps_description_label.margin_start = 60;
+            temps_description_label.margin_end = 60;
             temps_description_label.use_markup = true;
 
         var unit_label = new Gtk.Label (_("Use Fahrenheit :"));
@@ -66,12 +70,22 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
             this.settings.set_string ("temperature-source", this.temp_devices_combo.get_active_id ());
         });
 
-        content_area.attach (temps_description_label, 0, 0, 2, 1);
-        content_area.attach (temp_label, 0, 1);
-        content_area.attach (temp_devices_combo, 1, 1);
-        content_area.attach (advice_label, 1, 2);
-        content_area.attach (unit_label, 0, 3);
-        content_area.attach (unit_switch, 1, 3);
+        var options_grid = new Gtk.Grid ();
+            options_grid.halign = Gtk.Align.CENTER;
+            options_grid.hexpand = true;
+            options_grid.column_spacing = 16;
+            options_grid.row_spacing = 16;
+            options_grid.margin_top = 24;
+            options_grid.attach (temp_label, 0, 0);
+            options_grid.attach (temp_devices_combo, 1, 0);
+            options_grid.attach (advice_label, 1, 1);
+            options_grid.attach (unit_label, 0, 2);
+            options_grid.attach (unit_switch, 1, 2);
+
+        content_area.halign = Gtk.Align.FILL;
+        content_area.hexpand = true;
+        content_area.attach (temps_description_label, 0, 0);
+        content_area.attach (options_grid, 0, 1);
 
     }
 

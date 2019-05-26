@@ -120,11 +120,12 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         if (connexion) {
             string openweather_apiid;
             var settings_apiid = settings.get_string ("openweatherapi");
+            var openweatherapi_default = this.settings.get_default_value ("openweatherapi").get_string ();
 
-            if (settings_apiid != "418fd9370cf2cc9a1bd42df67af1ab2e") {
+            if (settings_apiid != openweatherapi_default) {
                 openweather_apiid = settings_apiid;
             } else {
-                openweather_apiid = "418fd9370cf2cc9a1bd42df67af1ab2e";
+                openweather_apiid = openweatherapi_default;
             }
 
             this.weather_uri = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&APPID=%s".printf
