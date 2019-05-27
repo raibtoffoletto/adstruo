@@ -1,11 +1,12 @@
 <p align="center">
-    <img align="left" width="64" height="64" src="data/icons/com.github.raibtoffoletto.adstruo.svg">
-    <h1 class="rich-diff-level-zero">Adstruo</h1>
+  <img align="left" width="64" height="64" src="data/icons/com.github.raibtoffoletto.adstruo.svg" />
+  <h1 class="rich-diff-level-zero">Adstruo</h1>
 </p>
-
 Adstruo aims to provide some additional indicators to ElementaryOS's Wingpanel, thus, extending its functionality and providing extra information at a quick glance.
 
-![Adstruo Screenshot](https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png)
+<center>
+  <img src="https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png" alt="Adstruo Screenshot" />
+</center>
 
 ## Install, build and run
 ### Dependencies:
