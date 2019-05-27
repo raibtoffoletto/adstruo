@@ -5,7 +5,9 @@
 
 Adstruo aims to provide some additional indicators to ElementaryOS's Wingpanel, thus, extending its functionality and providing extra information at a quick glance.
 
+<center>
 ![Adstruo Screenshot](https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png)
+</center>
 
 ## Install, build and run
 ### Dependencies:
