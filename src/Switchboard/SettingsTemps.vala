@@ -9,7 +9,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
             activatable: true,
             description: _("Shows a hardware temperature in the wingpanel"),
             header: _("Indicators"),
-            icon_name: "sensors-temperature-symbolic",
+            icon_name: "termometer",
             title: _("Hardware Temperature")
         );
     }

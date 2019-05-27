@@ -11,7 +11,7 @@
    height="16"
    version="1.1"
    id="svg1502"
-   sodipodi:docname="termometer-max.svg"
+   sodipodi:docname="weather-temperature-min-symbolic.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
   <metadata
      id="metadata1508">
@@ -21,7 +21,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -36,13 +36,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
      id="namedview1504"
      showgrid="false"
-     inkscape:zoom="22.627417"
-     inkscape:cx="16.332661"
-     inkscape:cy="9.4803689"
+     inkscape:zoom="90.509668"
+     inkscape:cx="6.0067062"
+     inkscape:cy="4.2921809"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -75,20 +75,10 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="mercurio">
-    <rect
-       rx="0.55039704"
-       y="1.3903842"
-       x="7.3936305"
-       height="10.181896"
-       width="1.2127392"
-       id="rect5234-0"
-       style="fill:#e40013;fill-opacity:1;stroke:none;stroke-width:0.53024262;stroke-opacity:1" />
-    <circle
-       r="2.4242628"
-       cy="12.059759"
-       cx="8"
-       id="path5238-3"
-       style="fill:#e40013;fill-opacity:1;stroke:none;stroke-width:0.50823396;stroke-opacity:1" />
+    <path
+       style="fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.50823396;stroke-opacity:1"
+       d="M 5.5800781 12.154297 A 2.4242628 2.4242628 0 0 0 8 14.484375 A 2.4242628 2.4242628 0 0 0 10.419922 12.154297 L 5.5800781 12.154297 z "
+       id="path5238-3" />
   </g>
   <g
      inkscape:groupmode="layer"

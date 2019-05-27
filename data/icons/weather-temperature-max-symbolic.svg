@@ -11,7 +11,7 @@
    height="16"
    version="1.1"
    id="svg1502"
-   sodipodi:docname="termometer.svg"
+   sodipodi:docname="weather-temperature-max-symbolic.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
   <metadata
      id="metadata1508">
@@ -40,9 +40,9 @@
      inkscape:window-height="1017"
      id="namedview1504"
      showgrid="false"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="-323.53397"
-     inkscape:cy="49.953184"
+     inkscape:zoom="45.254834"
+     inkscape:cx="13.906603"
+     inkscape:cy="6.9165092"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -76,19 +76,19 @@
      id="layer4"
      inkscape:label="mercurio">
     <rect
-       rx="0.4227528"
-       y="5.4120541"
-       x="7.5342555"
-       height="6.1602263"
-       width="0.93148923"
+       rx="0.47016761"
+       y="1.3903842"
+       x="7.4820185"
+       height="10.181896"
+       width="1.0359626"
        id="rect5234-0"
-       style="fill:#e40013;fill-opacity:1;stroke:none;stroke-width:0.36146301;stroke-opacity:1" />
+       style="fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.49007544;stroke-opacity:1" />
     <circle
        r="2.4242628"
        cy="12.059759"
        cx="8"
        id="path5238-3"
-       style="fill:#e40013;fill-opacity:1;stroke:none;stroke-width:0.50823396;stroke-opacity:1" />
+       style="fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.50823396;stroke-opacity:1" />
   </g>
   <g
      inkscape:groupmode="layer"

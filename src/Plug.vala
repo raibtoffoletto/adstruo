@@ -6,7 +6,7 @@ public class Adstruo.Plug : Switchboard.Plug {
                 code_name: "adstruo",
                 display_name: _("Aditional Indicators"),
                 description: _("Manage aditional indicators for wingpanel."),
-                icon: "application-x-addon",
+                icon: "adstruo",
                 supported_settings: new Gee.TreeMap<string, string?> (null, null)
                 );
         supported_settings.set ("adstruo", null);

@@ -159,7 +159,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                         weather_description.valign = Gtk.Align.CENTER;
                         weather_description.margin_end = 8;
                     var weather_icon = weather_elements.get_string_member ("icon");
-                    var weather_icon_image = new Gtk.Image.from_icon_name (this.adstruo.get_weather_icon (weather_icon, true),
+                    var weather_icon_image = new Gtk.Image.from_icon_name (this.adstruo.get_weather_icon (weather_icon),
                                                                              Gtk.IconSize.DIALOG);
                         weather_icon_image.margin = 8;
                         weather_icon_image.margin_end = 20;
@@ -180,7 +180,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                     var wind = openweather_root.get_object_member ("wind");
                     var wind_speed = wind.get_double_member ("speed");
                     var wind_deg = wind.get_int_member ("deg");
-                    var wind_icon = new Gtk.Image.from_icon_name ("weather-windy-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+                    var wind_icon = new Gtk.Image.from_icon_name ("weather-windy", Gtk.IconSize.SMALL_TOOLBAR);
                         wind_icon.margin_end = 6;
                         wind_icon.halign = Gtk.Align.END;
                     var wind_label = new Gtk.Label (this.adstruo.convert_wind (wind_speed, wind_deg, this.imperial_units));
@@ -189,12 +189,12 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                     var sys = openweather_root.get_object_member ("sys");
                     var sys_sunrise = sys.get_int_member ("sunrise");
                     var sys_sunset = sys.get_int_member ("sunset");
-                    var sunrise_icon = new Gtk.Image.from_icon_name ("daytime-sunrise-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+                    var sunrise_icon = new Gtk.Image.from_icon_name ("daytime-sunrise", Gtk.IconSize.SMALL_TOOLBAR);
                         sunrise_icon.margin_end = 6;
                         sunrise_icon.halign = Gtk.Align.END;
                     var sunrise = new Gtk.Label (this.adstruo.convert_date (sys_sunrise));
                         sunrise.halign = Gtk.Align.START;
-                    var sunset_icon = new Gtk.Image.from_icon_name ("daytime-sunset-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+                    var sunset_icon = new Gtk.Image.from_icon_name ("daytime-sunset", Gtk.IconSize.SMALL_TOOLBAR);
                         sunset_icon.margin_end = 6;
                         sunset_icon.halign = Gtk.Align.END;
                     var sunset = new Gtk.Label (this.adstruo.convert_date (sys_sunset));
