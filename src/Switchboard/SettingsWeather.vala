@@ -6,7 +6,7 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
         Object (
             activatable: true,
             description: _("Shows the current weather in the wingpanel"),
-            icon_name: "weather-few-clouds-symbolic",
+            icon_name: "weather-few-clouds",
             title: _("Current Weather")
         );
     }

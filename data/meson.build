@@ -15,23 +15,16 @@ i18n.merge_file(
 )
 
 install_data(
-    'adstruo.svg',
+    join_paths('icons', 'com.github.raibtoffoletto.adstruo.svg'),
     install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
 )
 
+install_data(
+    join_paths('icons', 'com.github.raibtoffoletto.adstruo.temps.svg'),
+    install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'status')
+)
 
-extra_icons = ['termometer',
-            'weather-temperature-max',
-            'weather-temperature-min']
-
-foreach i : extra_icons
-    install_data(
-        join_paths('icons', i + '.svg'),
-        install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'status')
-    )
-
-    install_data(
-        join_paths('icons', i + '-symbolic.svg'),
-        install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'status')
-    )
-endforeach
+install_data(
+    join_paths('icons', 'temperature.svg'),
+    install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'status')
+)

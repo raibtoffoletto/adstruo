@@ -24,7 +24,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
             update_temp ();
         });
 
-        var icon = new Gtk.Image.from_icon_name ("termometer-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        var icon = new Gtk.Image.from_icon_name ("temperature", Gtk.IconSize.SMALL_TOOLBAR);
         temperature = new Gtk.Label ("0 ℃");
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
