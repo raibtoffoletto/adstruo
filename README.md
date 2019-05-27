@@ -19,20 +19,21 @@ Additional set indicators for Elementary's Wingpanel
 
 ### Clone and Compile
 ```bash
-git clone BLA
-cd BLA
-meson build --prefix=/usr
+$ git clone https://github.com/raibtoffoletto/adstruo.git
+$ cd adstruo
+$ meson build --prefix=/usr
 
-cd build
-sudo ninja install
+$ cd build
+$ ninja
+$ sudo ninja install
 ```
 ### Restart Wingpanel
-`pkill wingpanel -9`
+`$ pkill wingpanel -9`
 
 
 ## Generating pot file
 ```bash
 #in ./build directory
-sudo ninja com.github.raibtoffoletto.adstruo-pot
-sudo ninja com.github.raibtoffoletto.adstruo-update-po
+$ sudo ninja com.github.raibtoffoletto.adstruo-pot
+$ sudo ninja com.github.raibtoffoletto.adstruo-update-po
 ```
