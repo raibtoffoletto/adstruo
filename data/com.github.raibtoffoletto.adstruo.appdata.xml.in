@@ -5,7 +5,7 @@
   <extends>com.github.elementary.wingpanel</extends>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0</project_license>
-  <name>_("Additional Indicators")</name>
+  <name>Adstruo</name>
   <summary>_("Additional indicators for Elementary's Wingpanel")</summary>
   <description>
     <p>_("Adstruo aims to provide some additional indicators to ElementaryOS's Wingpanel,
