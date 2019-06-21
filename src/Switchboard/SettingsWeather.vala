@@ -26,7 +26,6 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
         Object (
             activatable: true,
             description: _("Shows the current weather in the wingpanel"),
-            icon_name: "weather-few-clouds",
             title: _("Current Weather")
         );
     }
@@ -34,6 +33,9 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
     construct {
         adstruo = new Adstruo.Utilities ();
         settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
+
+        this.icon_name = settings.get_boolean ("symbolic-icons") ?
+                            "weather-few-clouds-symbolic" : "weather-few-clouds";
 
         status_switch.active = this.settings.get_boolean ("status");
         adstruo.update_status (settings, this);
@@ -60,6 +62,19 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
             openweather_entry.width_chars = 32;
             openweather_entry.placeholder_text = "Enter your own API ID";
 
+        var symbolics_label = new Gtk.Label (_("Use Symbolic Icons :"));
+            symbolics_label.xalign = 1;
+
+        var symbolics_switch = new Gtk.Switch ();
+            symbolics_switch.valign = Gtk.Align.CENTER;
+            symbolics_switch.halign = Gtk.Align.START;
+            symbolics_switch.active = this.settings.get_boolean ("symbolic-icons");
+            symbolics_switch.notify["active"].connect (() => {
+                this.settings.set_boolean ("symbolic-icons", (symbolics_switch.active ? true : false));
+                this.icon_name = settings.get_boolean ("symbolic-icons") ?
+                                    "weather-few-clouds-symbolic" : "weather-few-clouds";
+            });
+
         var options_grid = new Gtk.Grid ();
             options_grid.halign = Gtk.Align.CENTER;
             options_grid.hexpand = true;
@@ -68,6 +83,8 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
             options_grid.margin_top = 24;
             options_grid.attach (openweather_label, 0, 0);
             options_grid.attach (openweather_entry, 1, 0);
+            options_grid.attach (symbolics_label, 0, 1);
+            options_grid.attach (symbolics_switch, 1, 1);
 
         content_area.halign = Gtk.Align.FILL;
         content_area.hexpand = true;
