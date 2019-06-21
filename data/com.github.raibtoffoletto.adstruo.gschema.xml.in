@@ -35,5 +35,10 @@
             <summary>Indicator Status</summary>
             <description>Status of the indicator, Active or Disabled</description>
         </key>
+        <key name="symbolic-icons" type="b">
+            <default>false</default>
+            <summary>Symbolic Icons</summary>
+            <description>Uses symbolic icons instead of the standard Elementary weather icons</description>
+        </key>
     </schema>
 </schemalist>

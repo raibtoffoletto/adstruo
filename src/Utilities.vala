@@ -125,6 +125,8 @@ public class Adstruo.Utilities {
                 condition = "weather-storm";
                 break;
             case "02d":
+                condition = "weather-few-clouds";
+                break;
             default :
                 condition = "weather-few-clouds";
                 break;
