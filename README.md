@@ -30,9 +30,10 @@
 > + Caps and Num Lock
 > + Weather *(to be rewritten)*
 
-<img src="https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png"
-alt="Adstruo Screenshot" style="display:block; margin-left: auto; margin-right: auto;" />
-
+<p align="center">
+  <img src="https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png"
+  alt="Adstruo Screenshot" style="display:block; margin-left: auto; margin-right: auto;" />
+</p>
 
 ## Install, build and run
 ### Dependencies:
