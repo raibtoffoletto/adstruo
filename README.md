@@ -24,7 +24,6 @@
 </p>
 
 >Adstruo *(from the latin: to add, to contribute)* aims to provide some additional indicators to ElementaryOS's Wingpanel, thus, extending its functionality and providing extra information at a quick glance.
-
 >Indicatos available so far:
 > + Hardware temperature
 > + Caps and Num Lock
