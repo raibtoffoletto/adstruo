@@ -29,7 +29,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 
     public Temps () {
         Object (
-            code_name : "adstruo-temps",
+            code_name : "adstruo-20-temps",
             display_name : _("Temperature Indicator"),
             description: _("Shows a hardware temperature indicator in the wingpanel")
         );
