@@ -41,4 +41,21 @@
             <description>Uses symbolic icons instead of the standard Elementary weather icons</description>
         </key>
     </schema>
+    <schema path="/com/github/raibtoffoletto/adstruo/keys/" id="com.github.raibtoffoletto.adstruo.keys">
+        <key name="capslock" type="b">
+            <default>false</default>
+            <summary>Capslock</summary>
+            <description>Shows if the capslock keys is enable</description>
+        </key>
+        <key name="numlock" type="b">
+            <default>false</default>
+            <summary>Numlock</summary>
+            <description>Shows if the numlock keys is enable</description>
+        </key>
+        <key name="status" type="b">
+            <default>false</default>
+            <summary>Indicator Status</summary>
+            <description>Status of the indicator, Active or Disabled</description>
+        </key>
+    </schema>
 </schemalist>

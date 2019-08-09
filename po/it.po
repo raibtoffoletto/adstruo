@@ -7,168 +7,134 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.raibtoffoletto.adstruo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 15:22+0200\n"
+"POT-Creation-Date: 2019-08-09 11:35+0200\n"
 "PO-Revision-Date: 2019-05-24 15:09+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Plug.vala:7
+#: src/Plug.vala:29
 msgid "Aditional Indicators"
 msgstr ""
 
-#: src/Plug.vala:8
-msgid "Manage aditional indicators for wingpanel."
+#: src/Plug.vala:30
+msgid "Manage wingpanel's aditional indicators "
 msgstr ""
 
-#: src/Plug.vala:51
+#: src/Plug.vala:75
 msgid "Activating Adstruo Options plugin"
 msgstr ""
 
-#: src/Switchboard/SettingsTemps.vala:9
-msgid "Shows a temperature indicator in the wingpanel"
-msgstr ""
-
-#: src/Switchboard/SettingsTemps.vala:10
+#: src/Switchboard/SettingsTemps.vala:29
 msgid "Indicators"
 msgstr ""
 
-#: src/Switchboard/SettingsTemps.vala:12
-msgid "Temperature"
+#: src/Switchboard/SettingsTemps.vala:30
+msgid "Hardware Temperature"
 msgstr ""
 
-#: src/Switchboard/SettingsTemps.vala:28
-msgid "Use Fahrenheit : "
+#: src/Switchboard/SettingsTemps.vala:31
+msgid "Shows a hardware temperature in the wingpanel"
 msgstr ""
 
-#: src/Switchboard/SettingsTemps.vala:39
-msgid "Source device to be monitored : "
-msgstr ""
-
-#: src/Switchboard/SettingsTemps.vala:55
+#: src/Switchboard/SettingsTemps.vala:44
 msgid ""
-"<small>* Usually CPU temps are provided by the kernel (<i>i.e. k10</i>)</"
-"small>"
+"Here you can choose a device to monitor its temperature. \n"
+"Devices available may vary according to your system, the information is "
+"obtained directly from sensors in <b>/sys</b>."
 msgstr ""
 
-#: src/Switchboard/SettingsTemps.vala:75
-msgid "Enabled"
+#: src/Switchboard/SettingsTemps.vala:57
+msgid "Device to be monitored :"
 msgstr ""
 
-#: src/Switchboard/SettingsTemps.vala:75
-msgid "Disabled"
+#: src/Switchboard/SettingsTemps.vala:73
+msgid "* CPU temps are ysually provided by the kernel (<i>i.e. k10*</i>)"
 msgstr ""
 
-#: src/Temps.vala:12
+#: src/Switchboard/SettingsTemps.vala:76
+msgid "Use Fahrenheit :"
+msgstr ""
+
+#: src/Switchboard/SettingsKeys.vala:27
+msgid "Keyboard Status Keys"
+msgstr ""
+
+#: src/Switchboard/SettingsKeys.vala:28
+msgid "Shows the Capslock or Numlock status in the wingpanel"
+msgstr ""
+
+#: src/Switchboard/SettingsKeys.vala:41
+msgid "Num Lock indicator :"
+msgstr ""
+
+#: src/Switchboard/SettingsKeys.vala:49
+msgid "Caps Lock indicator :"
+msgstr ""
+
+#: src/Temps.vala:33
 msgid "Temperature Indicator"
 msgstr ""
 
-#: src/Temps.vala:13
-msgid "Adds temperature information (CPU or GPU) to the wingpanel."
+#: src/Temps.vala:34
+msgid "Shows a hardware temperature indicator in the wingpanel"
 msgstr ""
 
-#: src/Temps.vala:36 src/Weather.vala:63
+#: src/Temps.vala:52 src/Weather.vala:70
 msgid "Settings"
 msgstr ""
 
-#: src/Temps.vala:41
+#: src/Temps.vala:54
 msgid "Use Fahrenheit"
 msgstr ""
 
-#: src/Temps.vala:93
+#: src/Temps.vala:118
 msgid "Activating Temperature Indicator"
 msgstr ""
 
-#: src/Weather.vala:20
+#: src/Weather.vala:37
 msgid "Weather Conditions Indicator"
 msgstr ""
 
-#: src/Weather.vala:21
-msgid "Adds the current weather information to the wingpanel."
+#: src/Weather.vala:38
+msgid "Shows a weather indicator in the wingpanel"
 msgstr ""
 
-#: src/Weather.vala:57
+#: src/Weather.vala:64
 msgid "Update now"
 msgstr ""
 
-#: src/Weather.vala:114
-msgid "Could not get your location.\n"
+#: src/Weather.vala:122
+msgid "Unable to get your location"
 msgstr ""
 
-#: src/Weather.vala:130
-msgid "Waiting for Internet connection"
+#: src/Weather.vala:242
+msgid ""
+"Unable to retrieve weather information.\n"
+"Check if the OpenWeather API is correct!"
 msgstr ""
 
-#: src/Weather.vala:238
-msgid "Could not get the weather information.\n"
+#: src/Weather.vala:246
+msgid "Unable to retrieve weather information\n"
 msgstr ""
 
-#: src/Weather.vala:253
+#: src/Weather.vala:292
 msgid "Activating Weather Indicator"
 msgstr ""
 
-#: src/Utilities.vala:36
+#: src/Utilities.vala:43
+msgid "Enabled"
+msgstr ""
+
+#: src/Utilities.vala:43
+msgid "Disabled"
+msgstr ""
+
+#: src/Utilities.vala:78
 #, c-format
 msgid "Humidity: %i"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:8
-msgid "Adstruo"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:9
-msgid "_(\"Additional indicators for Elementary's Wingpanel\")"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.appdata.xml.in:11
-msgid ""
-"Adstruo aims to provide some additional indicators to ElementaryOS's "
-"Wingpanel, extending its functionality and providing extra information at an "
-"quick glance."
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:6
-msgid "Temperature Source"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:7
-msgid "Device that provides a temperature information"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:11
-msgid "Unit Fahrenheit"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:12
-msgid "Uses Imperial (Fahrenheit) unit or Celsius by default"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:16
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:33
-msgid "Indicator Status"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:17
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:34
-msgid "Status of the indicator, Active or Disabled"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:23
-msgid "OpenWeather API ID"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:24
-msgid "API ID to be used with the OpenWeather service"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:28
-msgid "Imperial Units"
-msgstr ""
-
-#: data/com.github.raibtoffoletto.adstruo.gschema.xml.in:29
-msgid "Uses Imperial (Fahrenheit and Miles) units or Metric by default"
 msgstr ""

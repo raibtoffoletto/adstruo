@@ -19,54 +19,52 @@
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
 public class Adstruo.Plug : Switchboard.Plug {
-    private Gtk.Paned main_panel;
+    public Adstruo.Utilities adstruo { get; set; }
+    private Gtk.Paned main_panel { get; set; }
 
     public Plug () {
-        Object (category: Category.PERSONAL,
-                code_name: "adstruo",
-                display_name: _("Aditional Indicators"),
-                description: _("Manage aditional indicators for wingpanel."),
-                icon: "com.github.raibtoffoletto.adstruo",
-                supported_settings: new Gee.TreeMap<string, string?> (null, null)
-                );
+        Object (
+            category: Category.PERSONAL,
+            code_name: "adstruo",
+            display_name: _("Aditional Indicators"),
+            description: _("Manage wingpanel's aditional indicators "),
+            icon: "com.github.raibtoffoletto.adstruo",
+            supported_settings: new Gee.TreeMap<string, string?> (null, null)
+        );
+    }
+
+    construct {
+        adstruo = new Adstruo.Utilities ();
+        main_panel = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
         supported_settings.set ("adstruo", null);
     }
 
     public override Gtk.Widget get_widget () {
-        main_panel = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
-
-        //list of indicators available
-        var settings_temps = new Adstruo.SettingsTemps ();
-        var settings_weather = new Adstruo.SettingsWeather ();
-
-        //add panels to paned widget
-        var main_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo");
+        var settings_temps = new Adstruo.SettingsTemps (this);
+        var settings_keys = new Adstruo.SettingsKeys (this);
+        // var settings_weather = new Adstruo.SettingsWeather ();
 
         var stack = new Gtk.Stack ();
             stack.add_named (settings_temps, "adstruo-temps");
-            stack.add_named (settings_weather, "adstruo-weather");
+            stack.add_named (settings_keys, "adstruo-keys");
+            // stack.add_named (settings_weather, "adstruo-weather");
 
         var sidebar = new Granite.SettingsSidebar (stack);
+
+        stack.set_visible_child_name (adstruo.main_settings.get_string ("settings-to-open"));
 
         main_panel.add (sidebar);
         main_panel.add (stack);
         main_panel.show_all ();
 
-        stack.set_visible_child_name (main_settings.get_string ("settings-to-open"));
-        //BUG: Settings sidebar won't be selected... can't figure out a way to set visible_child_name that worked
-
-
         return main_panel;
     }
 
-    public override void shown () {
-    }
+    public override void shown () {}
 
-    public override void hidden () {
-    }
+    public override void hidden () {}
 
-    public override void search_callback (string location) {
-    }
+    public override void search_callback (string location) {}
 
     public override async Gee.TreeMap<string, string> search (string search) {
         return new Gee.TreeMap<string, string> (null, null);
@@ -75,6 +73,5 @@ public class Adstruo.Plug : Switchboard.Plug {
 
 public Switchboard.Plug get_plug (Module module) {
     debug (_("Activating Adstruo Options plugin"));
-    var plug = new Adstruo.Plug ();
-    return plug;
+    return new Adstruo.Plug ();
 }
