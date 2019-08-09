@@ -18,25 +18,34 @@
 *
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
-public class Adstruo.Utilities {
-    public void update_indicator_status (Wingpanel.Indicator indicator, bool status = true) {
-        indicator.visible = status;
+public class Adstruo.Utilities : Object {
+    public GLib.Settings main_settings { get; construct; }
+    public GLib.Settings temp_settings { get; construct; }
+    // public GLib.Settings main_settings { get; construct; }
+
+    construct {
+        main_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo");
+        temp_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
     }
 
-    public void update_status (GLib.Settings settings, Granite.SimpleSettingsPage plug) {
-        settings.set_boolean ("status", plug.status_switch.active);
-        plug.status = (plug.status_switch.active ? _("Enabled") : _("Disabled"));
+    public void update_plug_status (string indicator, Granite.SimpleSettingsPage plug) {
+        switch (indicator) {
+            case "adstruo-temps":
+                temp_settings.set_boolean ("status", plug.status_switch.active);
+                break;
+        }
+
+        plug.status = plug.status_switch.active ? _("Enabled") : _("Disabled");
     }
 
     public void show_settings (Wingpanel.Indicator popover) {
         popover.close ();
-        var main_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo");
-            main_settings.set_string ("settings-to-open", popover.code_name);
+        main_settings.set_string ("settings-to-open", popover.code_name);
 
         try {
             AppInfo.launch_default_for_uri ("settings://adstruo", null);
         } catch (Error e) {
-            warning ("%s\n", e.message);
+            print ("Erro: %s\n", e.message);
         }
     }
 

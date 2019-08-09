@@ -18,6 +18,7 @@
 *
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
+
 public class Adstruo.Temps : Wingpanel.Indicator {
     private Gtk.Box display_widget;
     private Gtk.Box popover_widget;
@@ -35,43 +36,41 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     }
 
     construct {
+        visible = false;
         adstruo = new Adstruo.Utilities ();
-        settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
-
-        adstruo.update_indicator_status (this, settings.get_boolean ("status"));
-        settings.change_event.connect (() => {
-            adstruo.update_indicator_status (this, settings.get_boolean ("status"));
-            update_temp ();
-        });
+        settings = adstruo.temp_settings;
 
         var icon = new Gtk.Image.from_icon_name ("temperature", Gtk.IconSize.SMALL_TOOLBAR);
-        temperature = new Gtk.Label ("0 ℃");
+        temperature = new Gtk.Label ("N/A");
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         display_widget.valign = Gtk.Align.CENTER;
-        display_widget.pack_start (icon);
-        display_widget.pack_start (temperature);
+        display_widget.pack_start (icon, false, false);
+        display_widget.pack_end (temperature, false, false);
 
         var options_button = new Gtk.ModelButton ();
             options_button.text = _("Settings");
-            options_button.clicked.connect (() => {
-                this.adstruo.show_settings (this);
-            });
 
         fahrenheit_switch = new Wingpanel.Widgets.Switch (_("Use Fahrenheit"));
-        fahrenheit_switch.notify["active"].connect (() => {
-            this.settings.set_boolean ("unit-fahrenheit", (fahrenheit_switch.active ? true : false));
-            update_temp ();
-        });
 
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         popover_widget.add (fahrenheit_switch);
         popover_widget.add (new Wingpanel.Widgets.Separator ());
         popover_widget.add (options_button);
 
-        update_temp ();
-        Timeout.add_full (Priority.DEFAULT, 5000, update_temp);
+        activate_indicator (settings.get_boolean ("status"));
 
+        settings.change_event.connect (() => {
+            activate_indicator (settings.get_boolean ("status"));
+        });
+
+        fahrenheit_switch.notify["active"].connect (() => {
+            settings.set_boolean ("unit-fahrenheit", fahrenheit_switch.active ? true : false);
+        });
+
+        options_button.clicked.connect (() => {
+            adstruo.show_settings (this);
+        });
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -88,36 +87,37 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     public override void closed () {
     }
 
-    //get temperatures directly from /sys and update indicator
+    public void activate_indicator (bool enable = false) {
+        visible = enable;
+        fahrenheit_switch.active = settings.get_boolean ("unit-fahrenheit");
+        if (update_temp ()) {
+            Timeout.add_full (Priority.DEFAULT, 2500, update_temp);
+        }
+    }
+
     private bool update_temp () {
-        var temperature_source = this.settings.get_string ("temperature-source");
-        var unit_fahrenheit = this.settings.get_boolean ("unit-fahrenheit");
-        fahrenheit_switch.active = unit_fahrenheit;
+        var temperature_source = settings.get_string ("temperature-source");
+        var unit_fahrenheit = settings.get_boolean ("unit-fahrenheit");
 
     	try {
             string temp_raw;
             FileUtils.get_contents("/sys/class/hwmon/" + temperature_source + "/temp1_input", out temp_raw);
 
-            this.temperature.label = this.adstruo.convert_temp (temp_raw, unit_fahrenheit);
-
-        } catch (FileError err) {
-    		stderr.printf (err.message);
+            temperature.label = adstruo.convert_temp (temp_raw, unit_fahrenheit);
+        } catch (FileError e) {
+    		stdout.printf ("Error: %s\n", e.message);
 	        return false;
 	    }
 
-	    return true;
+	    return settings.get_boolean ("status");
     }
 
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug (_("Activating Temperature Indicator"));
-
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
     }
-
-    var indicator = new Adstruo.Temps ();
-
-    return indicator;
+    return new Adstruo.Temps ();
 }
