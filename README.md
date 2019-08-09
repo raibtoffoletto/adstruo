@@ -23,6 +23,10 @@
   <h1 class="rich-diff-level-zero">Adstruo</h1>
 </p>
 >Adstruo *(from the latin: to add, to contribute)* aims to provide some additional indicators to ElementaryOS's Wingpanel, thus, extending its functionality and providing extra information at a quick glance.
+>Indicatos available so far:
+> + Hardware temperature
+> + Caps and Num Lock
+> + Weather *(to be rewritten)*
 
 <center>
   <img src="https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png" alt="Adstruo Screenshot" />

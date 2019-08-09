@@ -1,7 +1,6 @@
 src/Plug.vala
 src/Switchboard/SettingsTemps.vala
+src/Switchboard/SettingsKeys.vala
 src/Temps.vala
 src/Weather.vala
 src/Utilities.vala
-data/com.github.raibtoffoletto.adstruo.appdata.xml.in
-data/com.github.raibtoffoletto.adstruo.gschema.xml.in
