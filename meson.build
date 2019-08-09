@@ -29,6 +29,14 @@ shared_module('adstruo-temps',
     install_dir : wingpanel_dep.get_pkgconfig_variable('indicatorsdir')
 )
 
+shared_module('adstruo-keys',
+    'src/Keys.vala',
+    'src/Utilities.vala',
+    dependencies: dependencies,
+    install: true,
+    install_dir : wingpanel_dep.get_pkgconfig_variable('indicatorsdir')
+)
+
 # shared_module('adstruo-weather',
 #     'src/Weather.vala',
 #     'src/Utilities.vala',
@@ -41,6 +49,7 @@ shared_module('adstruo-plug',
     'src/Plug.vala',
     'src/Utilities.vala',
     'src/Switchboard/SettingsTemps.vala',
+    'src/Switchboard/SettingsKeys.vala',
     # 'src/Switchboard/SettingsWeather.vala',
     dependencies: dependencies,
     install: true,

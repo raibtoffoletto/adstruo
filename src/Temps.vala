@@ -106,7 +106,7 @@ public class Adstruo.Temps : Wingpanel.Indicator {
             temperature.label = adstruo.convert_temp (temp_raw, unit_fahrenheit);
         } catch (FileError e) {
     		stdout.printf ("Error: %s\n", e.message);
-	        return false;
+	        return Source.REMOVE;
 	    }
 
 	    return settings.get_boolean ("status");

@@ -107,7 +107,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         });
 
         unit_switch.notify["active"].connect (() => {
-            settings.set_boolean ("unit-fahrenheit", (unit_switch.active ? true : false));
+            settings.set_boolean ("unit-fahrenheit", unit_switch.active);
         });
 
     }

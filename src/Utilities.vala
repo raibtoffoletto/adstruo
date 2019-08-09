@@ -21,17 +21,22 @@
 public class Adstruo.Utilities : Object {
     public GLib.Settings main_settings { get; construct; }
     public GLib.Settings temp_settings { get; construct; }
+    public GLib.Settings keys_settings { get; construct; }
     // public GLib.Settings main_settings { get; construct; }
 
     construct {
         main_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo");
         temp_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
+        keys_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.keys");
     }
 
     public void update_plug_status (string indicator, Granite.SimpleSettingsPage plug) {
         switch (indicator) {
             case "adstruo-temps":
                 temp_settings.set_boolean ("status", plug.status_switch.active);
+                break;
+            case "adstruo-keys":
+                keys_settings.set_boolean ("status", plug.status_switch.active);
                 break;
         }
 
