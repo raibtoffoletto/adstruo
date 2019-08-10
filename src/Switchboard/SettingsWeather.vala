@@ -19,26 +19,26 @@
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
 public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
+    public weak Adstruo.Plug plug { get; construct; }
     private GLib.Settings settings;
-    private Adstruo.Utilities adstruo;
 
-    public SettingsWeather () {
+    public SettingsWeather (Adstruo.Plug plug) {
         Object (
-            activatable: true,
+            title: _("Current Weather"),
             description: _("Shows the current weather in the wingpanel"),
-            title: _("Current Weather")
+            activatable: true,
+            plug: plug
         );
     }
 
     construct {
-        adstruo = new Adstruo.Utilities ();
-        settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
+        settings = plug.adstruo.weather_settings;
 
         this.icon_name = settings.get_boolean ("symbolic-icons") ?
                             "weather-few-clouds-symbolic" : "weather-few-clouds";
 
-        status_switch.active = this.settings.get_boolean ("status");
-        adstruo.update_status (settings, this);
+        status_switch.active = settings.get_boolean ("status");
+        plug.adstruo.update_plug_status ("adstruo-weather", this);
 
         var weather_description = _("This indicator gets the weather information from the " +
                                     "OpenWeatherMap organization.\nThe language and units used " +
@@ -113,7 +113,7 @@ public class Adstruo.SettingsWeather : Granite.SimpleSettingsPage {
         });
 
         status_switch.notify["active"].connect (() => {
-            this.adstruo.update_status (this.settings, this);
+            plug.adstruo.update_plug_status ("adstruo-weather", this);
         });
     }
 

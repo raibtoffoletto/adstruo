@@ -42,12 +42,12 @@ public class Adstruo.Plug : Switchboard.Plug {
     public override Gtk.Widget get_widget () {
         var settings_temps = new Adstruo.SettingsTemps (this);
         var settings_keys = new Adstruo.SettingsKeys (this);
-        // var settings_weather = new Adstruo.SettingsWeather ();
+        var settings_weather = new Adstruo.SettingsWeather (this);
 
         var stack = new Gtk.Stack ();
-            stack.add_named (settings_temps, "adstruo-temps");
-            stack.add_named (settings_keys, "adstruo-keys");
-            // stack.add_named (settings_weather, "adstruo-weather");
+            stack.add_named (settings_temps, "adstruo-20-temps");
+            stack.add_named (settings_keys, "adstruo-30-keys");
+            stack.add_named (settings_weather, "adstruo-10-weather");
 
         var sidebar = new Granite.SettingsSidebar (stack);
 

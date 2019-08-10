@@ -22,12 +22,13 @@ public class Adstruo.Utilities : Object {
     public GLib.Settings main_settings { get; construct; }
     public GLib.Settings temp_settings { get; construct; }
     public GLib.Settings keys_settings { get; construct; }
-    // public GLib.Settings main_settings { get; construct; }
+    public GLib.Settings weather_settings { get; construct; }
 
     construct {
         main_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo");
         temp_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
         keys_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.keys");
+        weather_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
     }
 
     public void update_plug_status (string indicator, Granite.SimpleSettingsPage plug) {
@@ -37,6 +38,9 @@ public class Adstruo.Utilities : Object {
                 break;
             case "adstruo-keys":
                 keys_settings.set_boolean ("status", plug.status_switch.active);
+                break;
+            case "adstruo-weather":
+                weather_settings.set_boolean ("status", plug.status_switch.active);
                 break;
         }
 
@@ -95,14 +99,30 @@ public class Adstruo.Utilities : Object {
         if (imperial) {
             var wind_speed = (speed * 2237) / 1000;
             wind_label = "%i mph". printf ((int)wind_speed);
-
         } else {
             var wind_speed = (speed * 36) / 10;
             wind_label = "%i km/h". printf ((int)wind_speed);
         }
 
-        var label = "%s".printf (wind_label);
-        return label;
+        if (45 <= degree < 90) {
+            degree_label = "↗";
+        } else if (90 <= degree < 135) {
+            degree_label = "→";
+        } else if (135 <= degree < 180) {
+            degree_label = "↘";
+        } else if (180 <= degree < 225) {
+            degree_label = "↓";
+        } else if (225 <= degree < 270) {
+            degree_label = "↙";
+        } else if (270 <= degree < 315) {
+            degree_label = "←";
+        } else if (315 <= degree < 360) {
+            degree_label = "↖";
+        } else {
+            degree_label = "↑";
+        }
+
+        return "%s <small>%s</small>".printf (wind_label, degree_label);
     }
 
     public string get_weather_icon (string icon_code = "", bool symbolic = false) {
@@ -114,6 +134,9 @@ public class Adstruo.Utilities : Object {
                 break;
             case "01n":
                 condition = "weather-clear-night";
+                break;
+            case "02d":
+                condition = "weather-few-clouds";
                 break;
             case "02n":
                 condition = "few-clouds-night";
@@ -137,9 +160,6 @@ public class Adstruo.Utilities : Object {
             case "11d":
             case "11n":
                 condition = "weather-storm";
-                break;
-            case "02d":
-                condition = "weather-few-clouds";
                 break;
             default :
                 condition = "weather-few-clouds";

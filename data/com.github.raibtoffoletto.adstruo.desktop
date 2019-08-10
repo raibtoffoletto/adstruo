@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Adstruo
+GenericName=Wingpanel Indicators
+Comment=Aditional wingpanel indicators
+Categories=Utility;
+Exec=io.elementary.switchboard
+Icon=com.github.raibtoffoletto.adstruo
+Terminal=false
+Type=Application
+Keywords=Wingpanel; Indicators;
+X-GNOME-FullName=Adstruo
+NoDisplay=true
+X-GNOME-UsesNotifications=false
+

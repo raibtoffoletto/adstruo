@@ -7,6 +7,11 @@ i18n.merge_file(
 )
 
 install_data(
+    join_paths(meson.project_name() + '.desktop'),
+    install_dir: join_paths(get_option ('datadir'), 'applications')
+)
+
+install_data(
     join_paths('icons', 'com.github.raibtoffoletto.adstruo.svg'),
     install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
 )

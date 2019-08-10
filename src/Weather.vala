@@ -23,6 +23,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     private Gtk.Box popover_widget;
     private Adstruo.Utilities adstruo;
     private GLib.Settings settings;
+    private GLib.Settings gweather_unit;
     private Soup.Session http_session;
     private Gtk.Image icon;
     private Gtk.Label temperature;
@@ -40,58 +41,49 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     }
 
     construct {
+        visible = false;
         adstruo = new Adstruo.Utilities ();
-        settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
         http_session = new Soup.Session ();
         locale = Intl.get_language_names ();
-        get_location_data.begin ();
-
-        symbolic_icons = settings.get_boolean ("symbolic-icons");
-        adstruo.update_indicator_status (this, settings.get_boolean ("status"));
-
-        var gweather_unit = new GLib.Settings ("org.gnome.GWeather");
-        update_imperial_units (gweather_unit.get_string ("temperature-unit"));
+        settings = adstruo.weather_settings;
+        gweather_unit = new GLib.Settings ("org.gnome.GWeather");
 
         icon = new Gtk.Image.from_icon_name (adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
         temperature = new Gtk.Label ("n/a");
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         display_widget.valign = Gtk.Align.CENTER;
-        display_widget.pack_start (icon);
-        display_widget.pack_start (temperature);
+        display_widget.pack_start (icon, false, false);
+        display_widget.pack_end (temperature, false, false);
 
         var update_button = new Gtk.ModelButton ();
             update_button.text = _("Update now");
-            update_button.clicked.connect (() => {
-                get_weather_data.begin ();
-            });
-
         var options_button = new Gtk.ModelButton ();
             options_button.text = _("Settings");
-            options_button.clicked.connect (() => {
-                this.adstruo.show_settings (this);
-            });
 
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        popover_widget.pack_end (options_button);
-        popover_widget.pack_end (update_button);
-        popover_widget.pack_end (new Wingpanel.Widgets.Separator ());
+        popover_widget.expand = true;
+        popover_widget.pack_end (options_button, false, false);
+        popover_widget.pack_end (update_button, false, false);
+        popover_widget.pack_end (new Wingpanel.Widgets.Separator (), false, false);
+
+        activate_indicator (settings.get_boolean ("status"));
+
+        update_button.clicked.connect (() => {
+            get_weather_data.begin ();
+        });
+
+        options_button.clicked.connect (() => {
+            adstruo.show_settings (this);
+        });
 
         settings.change_event.connect (() => {
-            widget_grid_remove ();
-            symbolic_icons = settings.get_boolean ("symbolic-icons");
-            adstruo.update_indicator_status (this, settings.get_boolean ("status"));
-            get_weather_data.begin ();
+            activate_indicator (settings.get_boolean ("status"));
         });
 
         gweather_unit.change_event.connect (() => {
             update_imperial_units (gweather_unit.get_string ("temperature-unit"));
             get_weather_data.begin ();
-        });
-
-        Timeout.add_seconds_full (Priority.DEFAULT, 300, () => {
-            get_weather_data.begin ();
-            return true;
         });
 
     }
@@ -110,42 +102,53 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     public override void closed () {
     }
 
+    public void activate_indicator (bool enable = false) {
+        visible = enable;
+        symbolic_icons = settings.get_boolean ("symbolic-icons");
+        update_imperial_units (gweather_unit.get_string ("temperature-unit"));
+
+        if (enable) {
+            get_location_data.begin ();
+            Timeout.add_seconds_full (Priority.DEFAULT, 300, () => {
+                get_weather_data.begin ();
+                return settings.get_boolean ("status");
+            });
+        }
+    }
+
+
     public async void get_location_data () {
         try {
-            var geoclue = yield new GClue.Simple ("com.github.commandlocation", GClue.AccuracyLevel.EXACT, null);
+            var geoclue = yield new GClue.Simple ("com.github.raibtoffoletto.adstruo", GClue.AccuracyLevel.EXACT, null);
             update_location (geoclue.location.latitude, geoclue.location.longitude);
 
             geoclue.notify["location"].connect (() => {
                 update_location (geoclue.location.latitude, geoclue.location.longitude);
             });
         } catch (Error e) {
-            connection_failed (_("Unable to get your location"));
+            error_message (_("Unable to get your location"));
+            print ("err: %s".printf (e.message));
         }
      }
 
     public void update_location (double latitude = 0, double longitude = 0) {
-            string openweather_apiid;
-            var settings_apiid = this.settings.get_string ("openweatherapi");
-            var openweatherapi_default = this.settings.get_default_value ("openweatherapi").get_string ();
+        var settings_apiid = settings.get_string ("openweatherapi");
+        var openweatherapi_default = settings.get_default_value ("openweatherapi").get_string ();
+        var openweather_apiid = settings_apiid != openweatherapi_default ? settings_apiid : openweatherapi_default;
 
-            if (settings_apiid != openweatherapi_default) {
-                openweather_apiid = settings_apiid;
-            } else {
-                openweather_apiid = openweatherapi_default;
-            }
+        weather_uri = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&APPID=%s".printf
+                        (latitude, longitude, locale[0], openweather_apiid);
 
-            this.weather_uri = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&APPID=%s".printf
-                                (latitude, longitude, locale[0], openweather_apiid);
-            get_weather_data.begin ();
+        get_weather_data.begin ();
     }
 
     public async void get_weather_data () {
-        var openweather_message = new Soup.Message ("GET", this.weather_uri);
-        this.http_session.queue_message (openweather_message, (sess, mess) => {
+        var openweather_message = new Soup.Message ("GET", weather_uri);
+        http_session.queue_message (openweather_message, (sess, mess) => {
             try {
                 if (openweather_message.status_code == 200) {
                     var openweather_parser = new Json.Parser ();
-                        openweather_parser.load_from_data ((string) openweather_message.response_body.flatten ().data,
+                        openweather_parser.load_from_data ((string)openweather_message.response_body.flatten ().data,
                                                              -1);
                     var openweather_root = openweather_parser.get_root ().get_object ();
 
@@ -164,8 +167,9 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                         weather_description.valign = Gtk.Align.CENTER;
                         weather_description.margin_end = 8;
                     var weather_icon = weather_elements.get_string_member ("icon");
-                    var weather_icon_image = new Gtk.Image.from_icon_name (this.adstruo.get_weather_icon (weather_icon,
-                                                                            symbolic_icons), Gtk.IconSize.DIALOG);
+                    var weather_icon_image = new Gtk.Image.from_icon_name (adstruo.get_weather_icon
+                                                                            (weather_icon, symbolic_icons),
+                                                                            Gtk.IconSize.DIALOG);
                         weather_icon_image.margin = 8;
                         weather_icon_image.margin_end = 20;
                         weather_icon_image.hexpand = true;
@@ -175,7 +179,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                     var main_temp = main.get_double_member ("temp");
                     var main_humidity = main.get_int_member ("humidity");
                     var humidity = new Gtk.Label ("<small>" +
-                                                    this.adstruo.convert_humidity (main_humidity.to_string ())
+                                                    adstruo.convert_humidity (main_humidity.to_string ())
                                                     + "</small>");
                         humidity.halign = Gtk.Align.END;
                         humidity.use_markup = true;
@@ -188,9 +192,9 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                     var wind_icon = new Gtk.Image.from_icon_name ("weather-windy-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
                         wind_icon.margin_end = 6;
                         wind_icon.halign = Gtk.Align.END;
-                    var wind_label = new Gtk.Label (this.adstruo.convert_wind (wind_speed, wind_deg,
-                                                                                this.imperial_units));
+                    var wind_label = new Gtk.Label (adstruo.convert_wind (wind_speed, wind_deg, imperial_units));
                         wind_label.halign = Gtk.Align.START;
+                        wind_label.use_markup = true;
 
                     var sys = openweather_root.get_object_member ("sys");
                     var sys_sunrise = sys.get_int_member ("sunrise");
@@ -199,13 +203,13 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                                                                     Gtk.IconSize.SMALL_TOOLBAR);
                         sunrise_icon.margin_end = 6;
                         sunrise_icon.halign = Gtk.Align.END;
-                    var sunrise = new Gtk.Label (this.adstruo.convert_date (sys_sunrise));
+                    var sunrise = new Gtk.Label (adstruo.convert_date (sys_sunrise));
                         sunrise.halign = Gtk.Align.START;
                     var sunset_icon = new Gtk.Image.from_icon_name ("daytime-sunset-symbolic",
                                                                     Gtk.IconSize.SMALL_TOOLBAR);
                         sunset_icon.margin_end = 6;
                         sunset_icon.halign = Gtk.Align.END;
-                    var sunset = new Gtk.Label (this.adstruo.convert_date (sys_sunset));
+                    var sunset = new Gtk.Label (adstruo.convert_date (sys_sunset));
                         sunset.halign = Gtk.Align.START;
 
                     var extra_info = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
@@ -217,10 +221,8 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                         extra_info.pack_start(wind_icon);
                         extra_info.pack_start(wind_label);
 
-                    this.icon.set_from_icon_name (this.adstruo.get_weather_icon (weather_icon),
-                                                    Gtk.IconSize.SMALL_TOOLBAR);
-                    this.temperature.label = this.adstruo.convert_temp (main_temp.to_string (),
-                                                                        this.imperial_units, true);
+                    icon.set_from_icon_name (adstruo.get_weather_icon (weather_icon), Gtk.IconSize.SMALL_TOOLBAR);
+                    temperature.label = adstruo.convert_temp (main_temp.to_string (), imperial_units, true);
 
                     widget_grid_remove ();
                     var weather_info = new Gtk.Grid ();
@@ -237,55 +239,49 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                         weather_info.attach (extra_info, 0, 3, 2, 1);
                         weather_info.show_all ();
 
-                    this.popover_widget.pack_start (weather_info);
+                    popover_widget.pack_start (weather_info, false, false);
                 } else {
-                    connection_failed (_("Unable to retrieve weather information." +
+                    error_message (_("Unable to retrieve weather information." +
                                          "\nCheck if the OpenWeather API is correct!"));
                 }
             } catch (Error e) {
-                stderr.printf (_("Unable to retrieve weather information\n"));
+                error_message (_("Unable to connect to server.\n"));
+                print ("Err: %s\n".printf (e.message));
             }
         });
     }
 
     public void update_imperial_units (string gweather_value) {
-        if (gweather_value == "fahrenheit") {
-            this.imperial_units = true;
-        } else {
-            this.imperial_units = false;
-        }
+        imperial_units = gweather_value == "fahrenheit" ? true : false;
     }
 
-    public void connection_failed (string message = "") {
-            this.icon.set_from_icon_name (this.adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
-            this.temperature.label = "n/a";
+    public void error_message (string message = "") {
+        icon.set_from_icon_name (adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
+        temperature.label = "n/a";
 
-            var no_connection = new Gtk.Label (message);
-                no_connection.margin = 8;
-                no_connection.hexpand = true;
-                no_connection.halign = Gtk.Align.CENTER;
-                no_connection.valign = Gtk.Align.CENTER;
+        var error_label = new Gtk.Label (message);
+            error_label.margin = 8;
+            error_label.hexpand = true;
+            error_label.halign = Gtk.Align.CENTER;
+            error_label.valign = Gtk.Align.CENTER;
 
-            widget_grid_remove ();
-            var error_message = new Gtk.Grid ();
-                error_message.attach (no_connection, 0, 0);
-                error_message.show_all ();
+        widget_grid_remove ();
 
-            this.popover_widget.pack_start (error_message);
-        }
+        var error_grid = new Gtk.Grid ();
+            error_grid.attach (error_label, 0, 0);
+            error_grid.show_all ();
+
+        popover_widget.pack_start (error_grid, false, false);
+    }
 
     public void widget_grid_remove () {
-        var children = this.popover_widget.get_children ();
-        foreach (var child in children) {
+        foreach (var child in popover_widget.get_children ()) {
             if (child.name == "GtkGrid") {
-                this.popover_widget.remove (child);
+                popover_widget.remove (child);
             }
         }
     }
 
-    // public void widget_waiting () {
-
-    // }
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
@@ -295,6 +291,5 @@ public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorMan
         return null;
     }
 
-    var indicator = new Adstruo.Weather ();
-    return indicator;
+    return new Adstruo.Weather ();
 }
