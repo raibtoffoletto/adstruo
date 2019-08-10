@@ -22,8 +22,7 @@
 public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
     public weak Adstruo.Plug plug { get; construct; }
     private GLib.Settings settings;
-    private Gtk.ListStore temp_devices;
-    private Gtk.ComboBox temp_devices_combo;
+    private Gtk.ComboBoxText temp_devices_combo;
 
     public SettingsTemps (Adstruo.Plug plug) {
         Object (
@@ -58,18 +57,9 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         var temp_label = new Gtk.Label (_("Device to be monitored :"));
             temp_label.xalign = 1;
 
-            temp_devices = new Gtk.ListStore (2, typeof (string), typeof (string));
-            get_devices_list ();
-
-            temp_devices_combo = new Gtk.ComboBox.with_model (temp_devices);
-            temp_devices_combo.id_column = 0;
-            temp_devices_combo.entry_text_column = 1;
-            temp_devices_combo.set_size_request (180, 0);
-
-        var renderer = new Gtk.CellRendererText ();
-            temp_devices_combo.pack_start (renderer, true);
-            temp_devices_combo.add_attribute (renderer, "text", 1);
-            temp_devices_combo.active_id = settings.get_string ("temperature-source");
+        temp_devices_combo = new Gtk.ComboBoxText ();
+        temp_devices_combo.set_size_request (180, 0);
+        get_devices_list ();
 
         var advice_label = new Gtk.Label (_("* CPU temps are ysually provided by the kernel (<i>i.e. k10*</i>)"));
             advice_label.use_markup = true;
@@ -104,7 +94,7 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
         });
 
         temp_devices_combo.changed.connect (() => {
-            settings.set_string ("temperature-source", temp_devices_combo.get_active_id ());
+            settings.set_string ("temperature-source", temp_devices_combo.get_active_text ());
         });
 
         unit_switch.notify["active"].connect (() => {
@@ -122,12 +112,13 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
             while ((dirname = dir.read_name ()) != null) {
                 if (FileUtils.test ("/sys/class/hwmon/"+dirname+"/temp1_input", FileTest.EXISTS)) {
                     FileUtils.get_contents("/sys/class/hwmon/"+dirname+"/name", out name);
-                    Gtk.TreeIter iter;
-                    temp_devices.append (out iter);
-                    temp_devices.set (iter, 0, dirname, 1, name.strip ());
+                    temp_devices_combo.append (dirname, name.strip ());
+
+                    if (settings.get_string ("temperature-source") == name.strip ()) {
+                        temp_devices_combo.active_id = dirname;
+                    }
                 }
             }
-
         } catch (FileError err) {
             stderr.printf (err.message);
         }

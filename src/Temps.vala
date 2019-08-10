@@ -85,17 +85,23 @@ public class Adstruo.Temps : Wingpanel.Indicator {
     }
 
     private bool update_temp () {
-        var temperature_source = settings.get_string ("temperature-source");
-        var unit_fahrenheit = settings.get_boolean ("unit-fahrenheit");
-
     	try {
-            string temp_raw;
-            FileUtils.get_contents("/sys/class/hwmon/" + temperature_source + "/temp1_input", out temp_raw);
+            var dir = GLib.Dir.open ("/sys/class/hwmon/", 0);
+            string? dirname = null;
+            string name, temp_raw;
 
-            temperature.label = adstruo.convert_temp (temp_raw, unit_fahrenheit);
+            while ((dirname = dir.read_name ()) != null) {
+                if (FileUtils.test ("/sys/class/hwmon/"+dirname+"/temp1_input", FileTest.EXISTS)) {
+                    FileUtils.get_contents("/sys/class/hwmon/"+dirname+"/name", out name);
+                    if (settings.get_string ("temperature-source") == name.strip ()) {
+                        FileUtils.get_contents("/sys/class/hwmon/"+dirname+"/temp1_input", out temp_raw);
+                        temperature.label = adstruo.convert_temp (temp_raw, settings.get_boolean ("unit-fahrenheit"));
+                    }
+                }
+            }
         } catch (FileError e) {
     		stdout.printf ("Error: %s\n", e.message);
-	        return Source.REMOVE;
+	        return false;
 	    }
 
 	    return settings.get_boolean ("status");

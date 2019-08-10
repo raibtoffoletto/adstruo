@@ -60,6 +60,8 @@ public class Adstruo.Keys : Wingpanel.Indicator {
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         display_widget.valign = Gtk.Align.CENTER;
+        display_widget.pack_start (numlock, false, false);
+        display_widget.pack_end (capslock, false, false);
 
         var options_button = new Gtk.ModelButton ();
             options_button.text = _("Settings");
@@ -68,7 +70,11 @@ public class Adstruo.Keys : Wingpanel.Indicator {
         popover_widget.expand = true;
         popover_widget.pack_end (options_button, false, false);
 
-        activate_indicator (settings.get_boolean ("status"));
+        Timeout.add_full (Priority.DEFAULT, 5, () => {
+            activate_indicator ();
+            return false;
+        });
+
 
         options_button.clicked.connect (() => {
             try {
@@ -79,7 +85,7 @@ public class Adstruo.Keys : Wingpanel.Indicator {
         });
 
         settings.change_event.connect (() => {
-            activate_indicator (settings.get_boolean ("status"));
+            activate_indicator ();
         });
 
         keymap.state_changed.connect (update_keys);
@@ -87,7 +93,7 @@ public class Adstruo.Keys : Wingpanel.Indicator {
         notify["numlock-status"].connect (() => {
             if (numlock_status) {
                 numlock.get_style_context ().add_class ("keyboard");
-                numlock.label = "A";
+                numlock.label = "1";
             } else {
                 numlock.get_style_context ().remove_class ("keyboard");
                 numlock.label = "<span foreground=\"gray\">1</span>";
@@ -117,23 +123,11 @@ public class Adstruo.Keys : Wingpanel.Indicator {
 
     public override void closed () {}
 
-    private void activate_indicator (bool enable = false) {
-        visible = enable;
-
-        if (settings.get_boolean ("numlock")) {
-            display_widget.pack_start (numlock, false, false);
-        } else {
-            if (display_widget.get_children ().find (numlock) != null) {
-                display_widget.remove (numlock);
-            }
-        }
-
-        if (settings.get_boolean ("capslock")) {
-            display_widget.pack_end (capslock, false, false);
-        } else {
-            if (display_widget.get_children ().find (capslock) != null) {
-                display_widget.remove (capslock);
-            }
+    private void activate_indicator () {
+        visible = settings.get_boolean ("status");
+        if (visible) {
+            numlock.visible = settings.get_boolean ("numlock") ? true : false;
+            capslock.visible = settings.get_boolean ("capslock") ? true : false;
         }
     }
 
