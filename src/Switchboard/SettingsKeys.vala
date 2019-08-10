@@ -18,6 +18,7 @@
 *
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
+
 public class Adstruo.SettingsKeys : Granite.SimpleSettingsPage {
     public weak Adstruo.Plug plug { get; construct; }
     private GLib.Settings settings;
@@ -75,7 +76,5 @@ public class Adstruo.SettingsKeys : Granite.SimpleSettingsPage {
         capslock_switch.notify["active"].connect (() => {
             settings.set_boolean ("capslock", capslock_switch.active);
         });
-
     }
-
 }

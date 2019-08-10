@@ -18,7 +18,9 @@
 *
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
+
 public class Adstruo.Weather : Wingpanel.Indicator {
+    public string weather_uri { get; set; }
     private Gtk.Box display_widget;
     private Gtk.Box popover_widget;
     private Adstruo.Utilities adstruo;
@@ -29,7 +31,6 @@ public class Adstruo.Weather : Wingpanel.Indicator {
     private Gtk.Label temperature;
     private bool imperial_units;
     private bool symbolic_icons;
-    private string weather_uri;
     private string[] locale;
 
     public Weather () {
@@ -56,6 +57,13 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         display_widget.pack_start (icon, false, false);
         display_widget.pack_end (temperature, false, false);
 
+        var loading = new Gtk.Spinner ();
+            loading.active = true;
+        var grid_loading = new Gtk.Grid ();
+            grid_loading.hexpand = true;
+            grid_loading.halign = Gtk.Align.CENTER;
+            grid_loading.margin = 8;
+            grid_loading.attach (loading, 0, 0);
         var update_button = new Gtk.ModelButton ();
             update_button.text = _("Update now");
         var options_button = new Gtk.ModelButton ();
@@ -63,18 +71,28 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         popover_widget.expand = true;
+        popover_widget.pack_start (grid_loading, false, false);
         popover_widget.pack_end (options_button, false, false);
         popover_widget.pack_end (update_button, false, false);
         popover_widget.pack_end (new Wingpanel.Widgets.Separator (), false, false);
 
+        get_location_data.begin ();
         activate_indicator (settings.get_boolean ("status"));
 
-        update_button.clicked.connect (() => {
+        notify["weather-uri"].connect (() => {
             get_weather_data.begin ();
         });
 
+        update_button.clicked.connect (() => {
+                get_weather_data.begin ();
+        });
+
         options_button.clicked.connect (() => {
-            adstruo.show_settings (this);
+            try {
+                AppInfo.launch_default_for_uri ("settings://adstruo", null);
+            } catch (Error e) {
+                print ("Err: %s\n", e.message);
+            }
         });
 
         settings.change_event.connect (() => {
@@ -82,7 +100,6 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         });
 
         gweather_unit.change_event.connect (() => {
-            update_imperial_units (gweather_unit.get_string ("temperature-unit"));
             get_weather_data.begin ();
         });
 
@@ -96,24 +113,19 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         return popover_widget;
     }
 
-    public override void opened () {
-    }
+    public override void opened () {}
 
-    public override void closed () {
-    }
+    public override void closed () {}
 
     public void activate_indicator (bool enable = false) {
         visible = enable;
         symbolic_icons = settings.get_boolean ("symbolic-icons");
         update_imperial_units (gweather_unit.get_string ("temperature-unit"));
 
-        if (enable) {
-            get_location_data.begin ();
-            Timeout.add_seconds_full (Priority.DEFAULT, 300, () => {
-                get_weather_data.begin ();
-                return settings.get_boolean ("status");
-            });
-        }
+        Timeout.add_seconds_full (Priority.DEFAULT, 300, () => {
+            get_weather_data.begin ();
+            return settings.get_boolean ("status");
+        });
     }
 
 
@@ -127,7 +139,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
             });
         } catch (Error e) {
             error_message (_("Unable to get your location"));
-            print ("err: %s".printf (e.message));
+            print ("Err: %s\n".printf (e.message));
         }
      }
 
@@ -136,15 +148,17 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         var openweatherapi_default = settings.get_default_value ("openweatherapi").get_string ();
         var openweather_apiid = settings_apiid != openweatherapi_default ? settings_apiid : openweatherapi_default;
 
-        weather_uri = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&APPID=%s".printf
-                        (latitude, longitude, locale[0], openweather_apiid);
-
-        get_weather_data.begin ();
+        set_property (
+            "weather-uri",
+            "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&APPID=%s".printf
+                (latitude, longitude, locale[0], openweather_apiid)
+        );
     }
 
     public async void get_weather_data () {
-        var openweather_message = new Soup.Message ("GET", weather_uri);
-        http_session.queue_message (openweather_message, (sess, mess) => {
+        if (weather_uri != null) {
+            var openweather_message = new Soup.Message ("GET", weather_uri);
+            http_session.queue_message (openweather_message, (sess, mess) => {
             try {
                 if (openweather_message.status_code == 200) {
                     var openweather_parser = new Json.Parser ();
@@ -248,7 +262,10 @@ public class Adstruo.Weather : Wingpanel.Indicator {
                 error_message (_("Unable to connect to server.\n"));
                 print ("Err: %s\n".printf (e.message));
             }
-        });
+            });
+        } else {
+            error_message (_("Unable to get your location"));
+        }
     }
 
     public void update_imperial_units (string gweather_value) {
@@ -281,12 +298,10 @@ public class Adstruo.Weather : Wingpanel.Indicator {
             }
         }
     }
-
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug (_("Activating Weather Indicator"));
-
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
     }

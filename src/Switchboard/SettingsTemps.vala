@@ -18,6 +18,7 @@
 *
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
+
 public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
     public weak Adstruo.Plug plug { get; construct; }
     private GLib.Settings settings;
@@ -131,5 +132,4 @@ public class Adstruo.SettingsTemps : Granite.SimpleSettingsPage {
             stderr.printf (err.message);
         }
     }
-
 }

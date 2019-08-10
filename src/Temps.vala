@@ -48,15 +48,10 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         display_widget.pack_start (icon, false, false);
         display_widget.pack_end (temperature, false, false);
 
-        var options_button = new Gtk.ModelButton ();
-            options_button.text = _("Settings");
-
         fahrenheit_switch = new Wingpanel.Widgets.Switch (_("Use Fahrenheit"));
 
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         popover_widget.add (fahrenheit_switch);
-        popover_widget.add (new Wingpanel.Widgets.Separator ());
-        popover_widget.add (options_button);
 
         activate_indicator (settings.get_boolean ("status"));
 
@@ -66,10 +61,6 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 
         fahrenheit_switch.notify["active"].connect (() => {
             settings.set_boolean ("unit-fahrenheit", fahrenheit_switch.active ? true : false);
-        });
-
-        options_button.clicked.connect (() => {
-            adstruo.show_settings (this);
         });
     }
 
@@ -81,11 +72,9 @@ public class Adstruo.Temps : Wingpanel.Indicator {
         return popover_widget;
     }
 
-    public override void opened () {
-    }
+    public override void opened () {}
 
-    public override void closed () {
-    }
+    public override void closed () {}
 
     public void activate_indicator (bool enable = false) {
         visible = enable;
@@ -111,7 +100,6 @@ public class Adstruo.Temps : Wingpanel.Indicator {
 
 	    return settings.get_boolean ("status");
     }
-
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
@@ -119,5 +107,6 @@ public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorMan
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
     }
+
     return new Adstruo.Temps ();
 }

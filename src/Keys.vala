@@ -44,30 +44,39 @@ public class Adstruo.Keys : Wingpanel.Indicator {
         settings = adstruo.keys_settings;
         keymap = Gdk.Keymap.get_for_display (Gdk.Display.get_default ());
 
-        numlock = new Gtk.Label ("1");
+        numlock = new Gtk.Label ("<span foreground=\"gray\">1</span>");
+        numlock.use_markup = true;
         numlock.margin = 2;
         numlock.set_size_request (16, 16);
         numlock.halign = Gtk.Align.CENTER;
         numlock.valign = Gtk.Align.CENTER;
-        numlock.get_style_context ().add_class ("keyboard");
 
-        capslock = new Gtk.Label ("A");
+        capslock = new Gtk.Label ("<span foreground=\"gray\">A</span>");
+        capslock.use_markup = true;
         capslock.margin = 2;
         capslock.set_size_request (16, 16);
         capslock.halign = Gtk.Align.CENTER;
         capslock.valign = Gtk.Align.CENTER;
-        capslock.get_style_context ().add_class ("keyboard");
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         display_widget.valign = Gtk.Align.CENTER;
 
         var options_button = new Gtk.ModelButton ();
             options_button.text = _("Settings");
+
         popover_widget = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         popover_widget.expand = true;
-        popover_widget.add (options_button);
+        popover_widget.pack_end (options_button, false, false);
 
         activate_indicator (settings.get_boolean ("status"));
+
+        options_button.clicked.connect (() => {
+            try {
+                AppInfo.launch_default_for_uri ("settings://adstruo", null);
+            } catch (Error e) {
+                print ("Erro: %s\n", e.message);
+            }
+        });
 
         settings.change_event.connect (() => {
             activate_indicator (settings.get_boolean ("status"));
@@ -75,22 +84,25 @@ public class Adstruo.Keys : Wingpanel.Indicator {
 
         keymap.state_changed.connect (update_keys);
 
-        notify["capslock-status"].connect (() => {
-            capslock.visible = capslock_status;
-        });
-
         notify["numlock-status"].connect (() => {
-            numlock.visible = numlock_status;
+            if (numlock_status) {
+                numlock.get_style_context ().add_class ("keyboard");
+                numlock.label = "A";
+            } else {
+                numlock.get_style_context ().remove_class ("keyboard");
+                numlock.label = "<span foreground=\"gray\">1</span>";
+            }
         });
 
-        options_button.clicked.connect (() => {
-            adstruo.show_settings (this);
+        notify["capslock-status"].connect (() => {
+            if (capslock_status) {
+                capslock.get_style_context ().add_class ("keyboard");
+                capslock.label = "A";
+            } else {
+                capslock.get_style_context ().remove_class ("keyboard");
+                capslock.label = "<span foreground=\"gray\">A</span>";
+            }
         });
-
-        Timeout.add (10, () => {
-            update_keys ();
-            return Source.REMOVE;
-        }, Priority.DEFAULT);
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -107,6 +119,7 @@ public class Adstruo.Keys : Wingpanel.Indicator {
 
     private void activate_indicator (bool enable = false) {
         visible = enable;
+
         if (settings.get_boolean ("numlock")) {
             display_widget.pack_start (numlock, false, false);
         } else {
@@ -131,9 +144,10 @@ public class Adstruo.Keys : Wingpanel.Indicator {
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-    debug (_("Activating Temperature Indicator"));
+    debug (_("Activating Keys Indicator"));
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
     }
+
     return new Adstruo.Keys ();
 }

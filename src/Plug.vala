@@ -18,6 +18,7 @@
 *
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
+
 public class Adstruo.Plug : Switchboard.Plug {
     public Adstruo.Utilities adstruo { get; set; }
     private Gtk.Paned main_panel { get; set; }
@@ -51,8 +52,6 @@ public class Adstruo.Plug : Switchboard.Plug {
 
         var sidebar = new Granite.SettingsSidebar (stack);
 
-        stack.set_visible_child_name (adstruo.main_settings.get_string ("settings-to-open"));
-
         main_panel.add (sidebar);
         main_panel.add (stack);
         main_panel.show_all ();
@@ -73,5 +72,6 @@ public class Adstruo.Plug : Switchboard.Plug {
 
 public Switchboard.Plug get_plug (Module module) {
     debug (_("Activating Adstruo Options plugin"));
+
     return new Adstruo.Plug ();
 }

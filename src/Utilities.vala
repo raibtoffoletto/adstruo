@@ -18,14 +18,13 @@
 *
 * Authored by: Raí B. Toffoletto <rai@toffoletto.me>
 */
+
 public class Adstruo.Utilities : Object {
-    public GLib.Settings main_settings { get; construct; }
     public GLib.Settings temp_settings { get; construct; }
     public GLib.Settings keys_settings { get; construct; }
     public GLib.Settings weather_settings { get; construct; }
 
     construct {
-        main_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo");
         temp_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
         keys_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.keys");
         weather_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
@@ -45,17 +44,6 @@ public class Adstruo.Utilities : Object {
         }
 
         plug.status = plug.status_switch.active ? _("Enabled") : _("Disabled");
-    }
-
-    public void show_settings (Wingpanel.Indicator popover) {
-        popover.close ();
-        main_settings.set_string ("settings-to-open", popover.code_name);
-
-        try {
-            AppInfo.launch_default_for_uri ("settings://adstruo", null);
-        } catch (Error e) {
-            print ("Erro: %s\n", e.message);
-        }
     }
 
     public string convert_temp (string temp_in, bool fahrenheit = false, bool kelvin = false) {
