@@ -95,6 +95,10 @@ public class Adstruo.Weather : Wingpanel.Indicator {
             if (settings.get_boolean ("status") != visible) {
                 activate_indicator (settings.get_boolean ("status"));
             }
+            if (symbolic_icons != settings.get_boolean ("symbolic-icons")) {
+                symbolic_icons = settings.get_boolean ("symbolic-icons");
+                update_weather ();
+            }
         });
 
         gweather_unit.change_event.connect (() => {
