@@ -31,13 +31,16 @@
 > + Caps and Num Lock indicators
 > + Current weather from OpenWeatherMap
 
-<p><b><span style="color:red">This is not an official ElementaryAPP.</span></b></p>
+<p><b><span style="color:red">This is not an official ElementaryAPP.</span></b> - Install at your own risk 😉️</p>
 
 <p align="center">
   <img src="https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png"
   alt="Adstruo Screenshot" style="display:block; margin-left: auto; margin-right: auto;" />
 </p>
 
+## Knowing Issues:
+### Geoclue doesn't have a clue...
+The native Linux/Gnome localization service GeoClue isn't always accurate. Also, just after the install, it may take a full reboot for the indicator to work as it should.
 
 ## Install, build and run
 ### Dependencies:
