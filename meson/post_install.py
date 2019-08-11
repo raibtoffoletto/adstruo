@@ -11,3 +11,4 @@ if not os.environ.get('DESTDIR'):
   print('Compiling GSettings Schemas ... ')
   subprocess.call(['glib-compile-schemas', schemadir])
   subprocess.call(['gtk-update-icon-cache', '-qtf', icondir])
+  subprocess.call(['pkill', 'wingpanel', '-9'])
