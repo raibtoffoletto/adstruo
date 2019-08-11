@@ -28,13 +28,14 @@
 </p>
 
 > Adstruo *(from the latin: to add, to contribute)* provides some additional indicators to
-> ElementaryOS's Wingpanel. <br \>
+> ElementaryOS's Wingpanel.
+> 
 > Indicatos available so far:
 > + Hardware temperature
 > + Caps and Num Lock indicators
 > + Current weather from OpenWeatherMap
 
-<span style="color:red"><b>This is not an official ElementaryAPP</b></span>.
+<p><span style="color:red"><b>This is not an official ElementaryAPP</b></span>.</p>
 
 ## Install, build and run
 ### Dependencies:
