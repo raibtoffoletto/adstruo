@@ -125,6 +125,7 @@ public class Adstruo.Keys : Wingpanel.Indicator {
 
     private void activate_indicator () {
         visible = settings.get_boolean ("status");
+        update_keys ();
         if (visible) {
             numlock.visible = settings.get_boolean ("numlock") ? true : false;
             capslock.visible = settings.get_boolean ("capslock") ? true : false;
