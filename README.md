@@ -22,19 +22,25 @@
   <img align="left" width="64" height="64" src="data/icons/com.github.raibtoffoletto.adstruo.svg" />
   <h1 class="rich-diff-level-zero">Adstruo</h1>
 </p>
-<p align="center">
-  <img src="https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png"
-  alt="Adstruo Screenshot" style="display:block; margin-left: auto; margin-right: auto;" />
-</p>
 
 > Adstruo *(from the latin: to add, to contribute)* provides some additional indicators to
-> ElementaryOS's Wingpanel. <br \>
+> ElementaryOS's Wingpanel.
+> 
 > Indicatos available so far:
 > + Hardware temperature
 > + Caps and Num Lock indicators
 > + Current weather from OpenWeatherMap
 
-<span style="color:red"><b>This is not an official ElementaryAPP</b></span>.
+<p><b><span style="color:red">This is not an official ElementaryAPP.</span></b> - Install at your own risk 😉️</p>
+
+<p align="center">
+  <img src="https://github.com/raibtoffoletto/adstruo/raw/master/data/com.github.raibtoffoletto.adstruo.screenshot.png"
+  alt="Adstruo Screenshot" style="display:block; margin-left: auto; margin-right: auto;" />
+</p>
+
+## Knowing Issues:
+### Geoclue doesn't have a clue...
+The native Linux/Gnome localization service GeoClue isn't always accurate. Also, just after the install, it may take a full reboot for the indicator to work as it should.
 
 ## Install, build and run
 ### Dependencies:
