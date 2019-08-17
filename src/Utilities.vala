@@ -127,7 +127,7 @@ public class Adstruo.Utilities : Object {
                 condition = "weather-few-clouds";
                 break;
             case "02n":
-                condition = "few-clouds-night";
+                condition = "weather-few-clouds-night";
                 break;
             case "50d":
             case "50n":
