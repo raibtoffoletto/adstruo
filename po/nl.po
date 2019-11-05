@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.raibtoffoletto.adstruo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.raibtoffoletto.adstruo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-09 11:35+0200\n"
+"PO-Revision-Date: 2019-11-04 14:05+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl\n"
+
+#: src/Plug.vala:29
+msgid "Aditional Indicators"
+msgstr "Aanvullende indicatoren"
+
+#: src/Plug.vala:30
+msgid "Manage wingpanel's aditional indicators "
+msgstr "Beheer Wingpanel's aanvullende indicatoren "
+
+#: src/Plug.vala:75
+msgid "Activating Adstruo Options plugin"
+msgstr "Adstruo-optiesplug-in inschakelen"
+
+#: src/Switchboard/SettingsTemps.vala:29
+msgid "Indicators"
+msgstr "Indicatoren"
+
+#: src/Switchboard/SettingsTemps.vala:30
+msgid "Hardware Temperature"
+msgstr "Hardwaretemperatuur"
+
+#: src/Switchboard/SettingsTemps.vala:31
+msgid "Shows a hardware temperature in the wingpanel"
+msgstr "Toont een hardwaretemperatuur-indicator op Wingpanel"
+
+#: src/Switchboard/SettingsTemps.vala:44
+msgid ""
+"Here you can choose a device to monitor its temperature. \n"
+"Devices available may vary according to your system, the information is "
+"obtained directly from sensors in <b>/sys</b>."
+msgstr ""
+"Hier kun je kiezen welk apparaat moet worden gemonitord.\n"
+"De beschikbare apparaten kunnen per systeem verschillen. De informatie "
+"wordt opgehaald uit de sensoren in <b>/sys</b>."
+
+#: src/Switchboard/SettingsTemps.vala:57
+msgid "Device to be monitored :"
+msgstr "Te monitoren apparaat:"
+
+#: src/Switchboard/SettingsTemps.vala:73
+msgid "* CPU temps are ysually provided by the kernel (<i>i.e. k10*</i>)"
+msgstr ""
+"* CPU-temperaturen worden doorgaans doorgegeven door de kernel (<i>i.e. "
+"k10*</i>)"
+
+#: src/Switchboard/SettingsTemps.vala:76
+msgid "Use Fahrenheit :"
+msgstr "Fahrenheit gebruiken:"
+
+#: src/Switchboard/SettingsKeys.vala:27
+msgid "Keyboard Status Keys"
+msgstr "Statustoetsen"
+
+#: src/Switchboard/SettingsKeys.vala:28
+msgid "Shows the Capslock or Numlock status in the wingpanel"
+msgstr "Toont de CapsLock- op NumLock-status op Wingpanel"
+
+#: src/Switchboard/SettingsKeys.vala:41
+msgid "Num Lock indicator :"
+msgstr "NumLock-indicator:"
+
+#: src/Switchboard/SettingsKeys.vala:49
+msgid "Caps Lock indicator :"
+msgstr "CapsLock-indicator:"
+
+#: src/Temps.vala:33
+msgid "Temperature Indicator"
+msgstr "Temperatuurindicator"
+
+#: src/Temps.vala:34
+msgid "Shows a hardware temperature indicator in the wingpanel"
+msgstr "Toont een hardwaretemperatuur-indicator op Wingpanel"
+
+#: src/Temps.vala:52 src/Weather.vala:70
+msgid "Settings"
+msgstr "Instellingen"
+
+#: src/Temps.vala:54
+msgid "Use Fahrenheit"
+msgstr "Fahrenheit gebruiken"
+
+#: src/Temps.vala:118
+msgid "Activating Temperature Indicator"
+msgstr "Temperatuurindicator inschakelen"
+
+#: src/Weather.vala:37
+msgid "Weather Conditions Indicator"
+msgstr "Weersomstandigheden-indicator"
+
+#: src/Weather.vala:38
+msgid "Shows a weather indicator in the wingpanel"
+msgstr "Toont een weersomstandigheden-indicator op Wingpanel"
+
+#: src/Weather.vala:64
+msgid "Update now"
+msgstr "Nu bijwerken"
+
+#: src/Weather.vala:122
+msgid "Unable to get your location"
+msgstr "Je locatie kan niet worden opgehaald"
+
+#: src/Weather.vala:242
+msgid ""
+"Unable to retrieve weather information.\n"
+"Check if the OpenWeather API is correct!"
+msgstr ""
+"De weerinformatie kan niet worden opgehaald.\n"
+"Controleer je OpenWeatherMap API-sleutel!"
+
+#: src/Weather.vala:246
+msgid "Unable to retrieve weather information\n"
+msgstr "De weerinformatie kan niet worden opgehaald\n"
+
+#: src/Weather.vala:292
+msgid "Activating Weather Indicator"
+msgstr "Weerindicator inschakelen"
+
+#: src/Utilities.vala:43
+msgid "Enabled"
+msgstr "Ingeschakeld"
+
+#: src/Utilities.vala:43
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+#: src/Utilities.vala:78
+#, c-format
+msgid "Humidity: %i"
+msgstr "Luchtvochtigheid: %i"
