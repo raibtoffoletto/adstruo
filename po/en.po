@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.raibtoffoletto.adstruo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-09 11:35+0200\n"
+"POT-Creation-Date: 2019-11-05 12:13+0100\n"
 "PO-Revision-Date: 2019-05-24 15:09+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,16 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Plug.vala:29
+#: src/Plug.vala:30
 msgid "Aditional Indicators"
 msgstr ""
 
-#: src/Plug.vala:30
+#: src/Plug.vala:31
 #, fuzzy
 msgid "Manage wingpanel's aditional indicators "
 msgstr "_(\"Additional indicators for Elementary's Wingpanel\")"
 
-#: src/Plug.vala:75
+#: src/Plug.vala:74
 msgid "Activating Adstruo Options plugin"
 msgstr ""
 
@@ -55,28 +55,28 @@ msgstr ""
 msgid "Device to be monitored :"
 msgstr ""
 
-#: src/Switchboard/SettingsTemps.vala:73
+#: src/Switchboard/SettingsTemps.vala:64
 msgid "* CPU temps are ysually provided by the kernel (<i>i.e. k10*</i>)"
 msgstr ""
 
-#: src/Switchboard/SettingsTemps.vala:76
+#: src/Switchboard/SettingsTemps.vala:67
 #, fuzzy
 msgid "Use Fahrenheit :"
 msgstr "Unit Fahrenheit"
 
-#: src/Switchboard/SettingsKeys.vala:27
+#: src/Switchboard/SettingsKeys.vala:28
 msgid "Keyboard Status Keys"
 msgstr ""
 
-#: src/Switchboard/SettingsKeys.vala:28
+#: src/Switchboard/SettingsKeys.vala:29
 msgid "Shows the Capslock or Numlock status in the wingpanel"
 msgstr ""
 
-#: src/Switchboard/SettingsKeys.vala:41
+#: src/Switchboard/SettingsKeys.vala:42
 msgid "Num Lock indicator :"
 msgstr ""
 
-#: src/Switchboard/SettingsKeys.vala:49
+#: src/Switchboard/SettingsKeys.vala:50
 msgid "Caps Lock indicator :"
 msgstr ""
 
@@ -89,58 +89,63 @@ msgstr "Temperature Source"
 msgid "Shows a hardware temperature indicator in the wingpanel"
 msgstr ""
 
-#: src/Temps.vala:52 src/Weather.vala:70
-msgid "Settings"
-msgstr ""
-
-#: src/Temps.vala:54
+#: src/Temps.vala:51
 #, fuzzy
 msgid "Use Fahrenheit"
 msgstr "Unit Fahrenheit"
 
-#: src/Temps.vala:118
+#: src/Temps.vala:112
 msgid "Activating Temperature Indicator"
 msgstr ""
 
-#: src/Weather.vala:37
+#: src/Weather.vala:39
 msgid "Weather Conditions Indicator"
 msgstr ""
 
-#: src/Weather.vala:38
+#: src/Weather.vala:40
 msgid "Shows a weather indicator in the wingpanel"
 msgstr ""
 
-#: src/Weather.vala:64
+#: src/Weather.vala:70
 msgid "Update now"
 msgstr ""
 
-#: src/Weather.vala:122
+#: src/Weather.vala:72
+msgid "Settings"
+msgstr ""
+
+#: src/Weather.vala:146
 msgid "Unable to get your location"
 msgstr ""
 
-#: src/Weather.vala:242
+#: src/Weather.vala:270
 msgid ""
-"Unable to retrieve weather information.\n"
-"Check if the OpenWeather API is correct!"
+"Unable to get the weather.\n"
+"Check your connection or \n"
+"your OpenWeather API id."
 msgstr ""
 
-#: src/Weather.vala:246
-msgid "Unable to retrieve weather information\n"
+#: src/Weather.vala:274
+msgid "Unable to connect to server.\n"
 msgstr ""
 
-#: src/Weather.vala:292
+#: src/Weather.vala:279
+msgid "Unable to set your location"
+msgstr ""
+
+#: src/Weather.vala:317
 msgid "Activating Weather Indicator"
 msgstr ""
 
-#: src/Utilities.vala:43
+#: src/Utilities.vala:46
 msgid "Enabled"
 msgstr ""
 
-#: src/Utilities.vala:43
+#: src/Utilities.vala:46
 msgid "Disabled"
 msgstr ""
 
-#: src/Utilities.vala:78
+#: src/Utilities.vala:70
 #, c-format
 msgid "Humidity: %i"
 msgstr ""

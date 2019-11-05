@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.raibtoffoletto.adstruo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-09 11:35+0200\n"
-"PO-Revision-Date: 2019-05-24 15:09+0200\n"
+"POT-Creation-Date: 2019-11-05 12:13+0100\n"
+"PO-Revision-Date: 2019-11-05 12:53+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -16,30 +16,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: src/Plug.vala:29
-msgid "Aditional Indicators"
-msgstr ""
+"X-Generator: Poedit 2.2.4\n"
 
 #: src/Plug.vala:30
-msgid "Manage wingpanel's aditional indicators "
-msgstr ""
+msgid "Aditional Indicators"
+msgstr "Ícones adicionais"
 
-#: src/Plug.vala:75
+#: src/Plug.vala:31
+msgid "Manage wingpanel's aditional indicators "
+msgstr "Gerenciar ícones adicionais do wingpanel "
+
+#: src/Plug.vala:74
 msgid "Activating Adstruo Options plugin"
-msgstr ""
+msgstr "Ativando opções do plugin Adstruo"
 
 #: src/Switchboard/SettingsTemps.vala:29
 msgid "Indicators"
-msgstr ""
+msgstr "Ícones"
 
 #: src/Switchboard/SettingsTemps.vala:30
 msgid "Hardware Temperature"
-msgstr ""
+msgstr "Temperatura do equipamento"
 
 #: src/Switchboard/SettingsTemps.vala:31
 msgid "Shows a hardware temperature in the wingpanel"
-msgstr ""
+msgstr "Mostra a temperatura do equipamento no Wingpanel"
 
 #: src/Switchboard/SettingsTemps.vala:44
 msgid ""
@@ -47,94 +48,106 @@ msgid ""
 "Devices available may vary according to your system, the information is "
 "obtained directly from sensors in <b>/sys</b>."
 msgstr ""
+"Escolha o dispositivo para monitorar a temperatura.\n"
+"A lista pode variar de acordo com seu sistema, a temperatura é obtida "
+"diretamente dos sensores disponíveis em <b>/sys</b>."
 
 #: src/Switchboard/SettingsTemps.vala:57
 msgid "Device to be monitored :"
-msgstr ""
+msgstr "Dispositivo a ser monitorado :"
 
-#: src/Switchboard/SettingsTemps.vala:73
+#: src/Switchboard/SettingsTemps.vala:64
 msgid "* CPU temps are ysually provided by the kernel (<i>i.e. k10*</i>)"
 msgstr ""
+"* A temperatura da CPU são normalmente fornecidas pelo kernel (<i>i.e. "
+"k10*</i>)"
 
-#: src/Switchboard/SettingsTemps.vala:76
+#: src/Switchboard/SettingsTemps.vala:67
 msgid "Use Fahrenheit :"
-msgstr ""
-
-#: src/Switchboard/SettingsKeys.vala:27
-msgid "Keyboard Status Keys"
-msgstr ""
+msgstr "Usar Fahrenheit :"
 
 #: src/Switchboard/SettingsKeys.vala:28
+msgid "Keyboard Status Keys"
+msgstr "Status do Teclado"
+
+#: src/Switchboard/SettingsKeys.vala:29
 msgid "Shows the Capslock or Numlock status in the wingpanel"
-msgstr ""
+msgstr "Mostra o status do Capslock ou Numlock no Wingpanel"
 
-#: src/Switchboard/SettingsKeys.vala:41
+#: src/Switchboard/SettingsKeys.vala:42
 msgid "Num Lock indicator :"
-msgstr ""
+msgstr "Ícone do Num Lock :"
 
-#: src/Switchboard/SettingsKeys.vala:49
+#: src/Switchboard/SettingsKeys.vala:50
 msgid "Caps Lock indicator :"
-msgstr ""
+msgstr "Ícone do Caps Lock :"
 
 #: src/Temps.vala:33
 msgid "Temperature Indicator"
-msgstr ""
+msgstr "Indicador de Temperatura"
 
 #: src/Temps.vala:34
 msgid "Shows a hardware temperature indicator in the wingpanel"
-msgstr ""
+msgstr "Mostra a temperatura do equipamento no Wingpanel"
 
-#: src/Temps.vala:52 src/Weather.vala:70
-msgid "Settings"
-msgstr ""
-
-#: src/Temps.vala:54
+#: src/Temps.vala:51
 msgid "Use Fahrenheit"
-msgstr ""
+msgstr "Usar Fahrenheit"
 
-#: src/Temps.vala:118
+#: src/Temps.vala:112
 msgid "Activating Temperature Indicator"
-msgstr ""
+msgstr "Ativando o ícode de temperatura"
 
-#: src/Weather.vala:37
+#: src/Weather.vala:39
 msgid "Weather Conditions Indicator"
-msgstr ""
+msgstr "Condições Metereológicas"
 
-#: src/Weather.vala:38
+#: src/Weather.vala:40
 msgid "Shows a weather indicator in the wingpanel"
-msgstr ""
+msgstr "Mostra as condições metereológicas no Wingpanel"
 
-#: src/Weather.vala:64
+#: src/Weather.vala:70
 msgid "Update now"
-msgstr ""
+msgstr "Atualizar agora"
 
-#: src/Weather.vala:122
+#: src/Weather.vala:72
+msgid "Settings"
+msgstr "Opções"
+
+#: src/Weather.vala:146
 msgid "Unable to get your location"
-msgstr ""
+msgstr "Não foi possível obter sua localização"
 
-#: src/Weather.vala:242
+#: src/Weather.vala:270
 msgid ""
-"Unable to retrieve weather information.\n"
-"Check if the OpenWeather API is correct!"
+"Unable to get the weather.\n"
+"Check your connection or \n"
+"your OpenWeather API id."
 msgstr ""
+"Impossível de obter as condições metereológicas.\n"
+"Verifique sua conexão ou sua chave API do OpenWeather."
 
-#: src/Weather.vala:246
-msgid "Unable to retrieve weather information\n"
-msgstr ""
+#: src/Weather.vala:274
+msgid "Unable to connect to server.\n"
+msgstr "Impossível de se conectar com o servidor\n"
 
-#: src/Weather.vala:292
+#: src/Weather.vala:279
+msgid "Unable to set your location"
+msgstr "Não foi possível obter sua localização"
+
+#: src/Weather.vala:317
 msgid "Activating Weather Indicator"
-msgstr ""
+msgstr "Ativando o ícone das condições metereológicas"
 
-#: src/Utilities.vala:43
+#: src/Utilities.vala:46
 msgid "Enabled"
-msgstr ""
+msgstr "Activo"
 
-#: src/Utilities.vala:43
+#: src/Utilities.vala:46
 msgid "Disabled"
-msgstr ""
+msgstr "Desactivado"
 
-#: src/Utilities.vala:78
+#: src/Utilities.vala:70
 #, c-format
 msgid "Humidity: %i"
-msgstr ""
+msgstr "Humidade: %i"
