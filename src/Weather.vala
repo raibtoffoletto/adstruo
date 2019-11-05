@@ -49,6 +49,8 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         settings = adstruo.weather_settings;
         gweather_unit = new GLib.Settings ("org.gnome.GWeather");
 
+        get_location_data.begin ();
+
         icon = new Gtk.Image.from_icon_name (adstruo.get_weather_icon (), Gtk.IconSize.SMALL_TOOLBAR);
         temperature = new Gtk.Label ("n/a");
 
@@ -76,7 +78,6 @@ public class Adstruo.Weather : Wingpanel.Indicator {
         popover_widget.pack_end (update_button, false, false);
         popover_widget.pack_end (new Wingpanel.Widgets.Separator (), false, false);
 
-        get_location_data.begin ();
         activate_indicator (settings.get_boolean ("status"));
 
         notify["weather-uri"].connect (update_weather);

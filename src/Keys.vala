@@ -44,12 +44,16 @@ public class Adstruo.Keys : Wingpanel.Indicator {
         settings = adstruo.keys_settings;
         keymap = Gdk.Keymap.get_for_display (Gdk.Display.get_default ());
 
+        var css_provider = new Gtk.CssProvider ();
+            css_provider.load_from_resource ("/io/elementary/desktop/wingpanel/keyboard/KeyboardIcon.css");
+
         numlock = new Gtk.Label ("<span foreground=\"gray\">1</span>");
         numlock.use_markup = true;
         numlock.margin = 2;
         numlock.set_size_request (16, 16);
         numlock.halign = Gtk.Align.CENTER;
         numlock.valign = Gtk.Align.CENTER;
+        numlock.get_style_context ().add_provider (css_provider, 900);
 
         capslock = new Gtk.Label ("<span foreground=\"gray\">A</span>");
         capslock.use_markup = true;
@@ -57,6 +61,7 @@ public class Adstruo.Keys : Wingpanel.Indicator {
         capslock.set_size_request (16, 16);
         capslock.halign = Gtk.Align.CENTER;
         capslock.valign = Gtk.Align.CENTER;
+        capslock.get_style_context ().add_provider (css_provider, 900);
 
         display_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         display_widget.valign = Gtk.Align.CENTER;
@@ -75,7 +80,6 @@ public class Adstruo.Keys : Wingpanel.Indicator {
             return false;
         });
 
-
         options_button.clicked.connect (() => {
             try {
                 AppInfo.launch_default_for_uri ("settings://adstruo", null);
@@ -92,20 +96,20 @@ public class Adstruo.Keys : Wingpanel.Indicator {
 
         notify["numlock-status"].connect (() => {
             if (numlock_status) {
-                numlock.get_style_context ().add_class ("keyboard");
+                numlock.get_style_context ().add_class ("keyboard-icon");
                 numlock.label = "1";
             } else {
-                numlock.get_style_context ().remove_class ("keyboard");
+                numlock.get_style_context ().remove_class ("keyboard-icon");
                 numlock.label = "<span foreground=\"gray\">1</span>";
             }
         });
 
         notify["capslock-status"].connect (() => {
             if (capslock_status) {
-                capslock.get_style_context ().add_class ("keyboard");
+                capslock.get_style_context ().add_class ("keyboard-icon");
                 capslock.label = "A";
             } else {
-                capslock.get_style_context ().remove_class ("keyboard");
+                capslock.get_style_context ().remove_class ("keyboard-icon");
                 capslock.label = "<span foreground=\"gray\">A</span>";
             }
         });
