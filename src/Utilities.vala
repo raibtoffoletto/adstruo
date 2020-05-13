@@ -25,9 +25,17 @@ public class Adstruo.Utilities : Object {
     public GLib.Settings weather_settings { get; construct; }
 
     construct {
-        temp_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
-        keys_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.keys");
-        weather_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
+        if (SettingsSchemaSource.get_default ().lookup ("com.github.raibtoffoletto.adstruo.temps", false) != null) {
+            temp_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.temps");
+        }
+
+        if (SettingsSchemaSource.get_default ().lookup ("com.github.raibtoffoletto.adstruo.keys", false) != null) {
+            keys_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.keys");
+        }
+
+        if (SettingsSchemaSource.get_default ().lookup ("com.github.raibtoffoletto.adstruo.weather", false) != null) {
+            weather_settings = new GLib.Settings ("com.github.raibtoffoletto.adstruo.weather");
+        }
     }
 
     public void update_plug_status (string indicator, Granite.SimpleSettingsPage plug) {
