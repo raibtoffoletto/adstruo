@@ -135,17 +135,36 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
 
     public async void get_location_data () {
-        try {
-            var geoclue = yield new GClue.Simple ("com.github.raibtoffoletto.adstruo", GClue.AccuracyLevel.EXACT, null);
-            update_location (geoclue.location.latitude, geoclue.location.longitude);
+        // Waiting for a Mozzila valid API; Geoclue has been unreliable at the moment
+        var ipapi_message = new Soup.Message ("GET", "https://location.services.mozilla.com/v1/geolocate?key=test");
+        http_session.queue_message (ipapi_message, (sess, mess) => {
+            try {
+                if (ipapi_message.status_code == 200) {
+                    var ipapi_json = new Json.Parser ();
+                        ipapi_json.load_from_data ((string) mess.response_body.flatten ().data, -1);
+                    var ipapi_root = ipapi_json.get_root ().get_object ().get_object_member ("location");
 
-            geoclue.notify["location"].connect (() => {
-                update_location (geoclue.location.latitude, geoclue.location.longitude);
-            });
-        } catch (Error e) {
-            error_message (_("Unable to get your location"));
-            print ("Err: %s\n".printf (e.message));
-        }
+                    update_location (ipapi_root.get_double_member ("lat"), ipapi_root.get_double_member ("lng"));
+                } else {
+                    error_message (_("Could not connect to the server"));
+                }
+            } catch (Error e) {
+                error_message (_("Unable to get your location"));
+                print ("Err: %s\n".printf (e.message));
+            }
+
+        });
+        // try {
+        //     var geoclue = yield new GClue.Simple ("com.github.raibtoffoletto.adstruo", GClue.AccuracyLevel.EXACT, null);
+        //     update_location (geoclue.location.latitude, geoclue.location.longitude);
+
+        //     geoclue.notify["location"].connect (() => {
+        //         update_location (geoclue.location.latitude, geoclue.location.longitude);
+        //     });
+        // } catch (Error e) {
+        //     error_message (_("Unable to get your location"));
+        //     print ("Err: %s\n".printf (e.message));
+        // }
      }
 
     public void update_location (double latitude = 0, double longitude = 0) {
