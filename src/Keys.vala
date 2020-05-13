@@ -45,7 +45,27 @@ public class Adstruo.Keys : Wingpanel.Indicator {
         keymap = Gdk.Keymap.get_for_display (Gdk.Display.get_default ());
 
         var css_provider = new Gtk.CssProvider ();
-            css_provider.load_from_resource ("/io/elementary/desktop/wingpanel/keyboard/KeyboardIcon.css");
+        string css_style = """
+            .keyboard-icon { background-color: #fff;
+                            border-radius: 2px;
+                            box-shadow:
+                                0 0 2px alpha (#000, 0.3),
+                                0 1px 2px alpha (#000, 0.6);
+                            color: #333;
+                            font-weight: 600;
+                            padding: 0 3px;
+                            text-shadow: none; }
+            .panel.color-light .keyboard-icon {
+                            background-color: alpha (#000, 0.65);
+                            box-shadow:
+                                0 0 2px alpha (#fff, 0.3),
+                                0 1px 0 alpha (#fff, 0.25);
+                            color: #fff; } """;
+        try {
+            css_provider.load_from_data (css_style);
+        } catch (Error e) {
+            stdout.printf ("Error: %s\n", e.message);
+        }
 
         numlock = new Gtk.Label ("<span foreground=\"gray\">1</span>");
         numlock.use_markup = true;
