@@ -82,7 +82,7 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
         notify["weather-uri"].connect (update_weather);
 
-        update_button.clicked.connect (update_weather);
+        update_button.clicked.connect (update_location_data);
 
         options_button.clicked.connect (() => {
             try {
@@ -181,6 +181,10 @@ public class Adstruo.Weather : Wingpanel.Indicator {
 
     public void update_weather () {
         get_weather_data.begin ();
+    }
+
+    public void update_location_data () {
+        get_location_data.begin ();
     }
 
     public async void get_weather_data () {
